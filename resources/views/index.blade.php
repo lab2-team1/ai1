@@ -1,24 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>MarketPlace - Buy and Sell with Ease</title>
-        @vite('resources/css/app.css')
-    </head>
+    @include('shared.head', ['pageTitle' => 'MarketPlace - Buy and Sell with Ease'])
     <body>
         <!-- Navigation -->
-        <nav class="navbar">
-            <div class="navbar-container">
-                <div class="navbar-content">
-                    <a href="/" class="navbar-brand">MarketPlace</a>
-                    <div class="navbar-menu">
-                        <a href="#">Login</a>
-                        <a href="#" class="btn-primary">Create Offer</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        @include('shared.navigation')
 
         <!-- Main Content -->
         <main class="main-content">
@@ -101,44 +86,8 @@
             </div>
         </main>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-container">
-                <div class="footer-grid">
-                    <div>
-                        <h3 class="footer-title">About Us</h3>
-                        <p class="footer-description">Your trusted marketplace for buying and selling quality items.</p>
-                    </div>
-                    <div>
-                        <h3 class="footer-title">Quick Links</h3>
-                        <ul class="footer-links">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Terms</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="footer-title">Contact</h3>
-                        <ul class="footer-links">
-                            <li>Email: </li>
-                            <li>Phone: </li>
-                            <li>Address: </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="footer-title">Follow Us</h3>
-                        <ul class="footer-links">
-                            <li><a href="#">Facebook</a></li>
-                            <li><a href="#">Twitter</a></li>
-                            <li><a href="#">Instagram</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="footer-divider">
-                    <p>&copy; 2024 MarketPlace. All rights reserved.</p>
-                </div>
-            </div>
-        </footer>
+        <!-- footer -->
+        @include('shared.footer')
+
     </body>
 </html>

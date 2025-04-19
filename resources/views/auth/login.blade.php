@@ -9,22 +9,22 @@
     <div class="main-content">
         <div class="container">
             <div class="login-form-container">
-                @include('shared.session-error')
-                @include('shared.validation-error')
-
                 <h1 class="login-title">Zaloguj się</h1>
-
                 <form method="POST" action="{{ route('login.authenticate') }}" class="needs-validation" novalidate>
                     @csrf
                     <div class="form-group">
                         <label for="email" class="form-label">Email</label>
                         <input id="email" name="email" type="text" class="form-control @if ($errors->first('email')) is-invalid @endif" value="{{ old('email') }}">
-                        <div class="invalid-feedback">Nieprawidłowy email!</div>
+                            @error('email')
+                                <div class="invalid-feedback">Proszę podać poprawny adres e-mail!</div>
+                            @enderror
                     </div>
                     <div class="form-group">
                         <label for="password" class="form-label">Hasło</label>
-                        <input id="password" name="password" type="password" class="form-control @if ($errors->first('password')) is-invalid @endif">
-                        <div class="invalid-feedback">Nieprawidłowe hasło!</div>
+                        <input id="password" name="password" type="password" class="form-control @error('password') is-invalid @enderror">
+                        @error('password')
+                            <div class="invalid-feedback">Proszę podać poprawne hasło!</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Zaloguj się</button>
@@ -38,4 +38,3 @@
 </body>
 
 </html>
-

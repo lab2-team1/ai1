@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="footer-divider">
-            <p>&copy; 2024 MarketPlace. All rights reserved.</p>
+            <p>&copy; 2024 MarketPlace. </p>
         </div>
     </div>
 </footer>

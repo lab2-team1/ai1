@@ -9,19 +9,20 @@
                             <span>{{ Auth::user()->first_name }}</span>
                             <i class="fa-solid fa-user user-icon"></i>
                             <div class="dropdown-content">
-                                <a href="">Panel użytkownika</a>
-                                <a href="{{ route('logout') }}">Wyloguj się</a>
+                                <a href="">User Panel</a>
+                                <a href="">Admin Panel</a>
+                                <a href="{{ route('logout') }}">Log out!</a>
                             </div>
                         </div>
                     @else
                         <div style="white-space: nowrap !important;">
                             <a href="{{ route('login') }}">
-                                Zaloguj się!
+                                Log in!
                             </a>
                         </div>
                     @endif
                 </div>
-                <a href="#" class="btn-primary">Create Offer</a>
+                <a href="{{ Auth::check() ? '#' : route('login') }}" class="btn-primary">Create Offer</a>
             </div>
         </div>
     </div>

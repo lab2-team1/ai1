@@ -3,8 +3,26 @@
         <div class="navbar-content">
             <a href="/" class="navbar-brand">MarketPlace</a>
             <div class="navbar-menu">
-                <a href="#">Login</a>
-                <a href="#" class="btn-primary">Create Offer</a>
+                <div class="user-dropdown">
+                    @if (Auth::check())
+                        <div class="dropdown-wrapper user-info">
+                            <span>{{ Auth::user()->first_name }}</span>
+                            <i class="fa-solid fa-user user-icon"></i>
+                            <div class="dropdown-content">
+                                <a href="">User Panel</a>
+                                <a href="">Admin Panel</a>
+                                <a href="{{ route('logout') }}">Log out!</a>
+                            </div>
+                        </div>
+                    @else
+                        <div style="white-space: nowrap !important;">
+                            <a href="{{ route('login') }}">
+                                Log in!
+                            </a>
+                        </div>
+                    @endif
+                </div>
+                <a href="{{ Auth::check() ? '#' : route('login') }}" class="btn-primary">Create Offer</a>
             </div>
         </div>
     </div>

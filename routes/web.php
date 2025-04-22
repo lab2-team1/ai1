@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return view('index');
@@ -20,5 +19,3 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/auth/login', 'authenticate')->name('login.authenticate');
     Route::get('/auth/logout', 'logout')->name('logout');
 });
-
-Route::resource('categories', CategoryController::class);

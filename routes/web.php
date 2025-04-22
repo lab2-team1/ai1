@@ -15,6 +15,11 @@ Route::get('/userdashboard', function () {
     return view('dashboards.userDashboard');
 })->name('userDashboard');
 
+Route::get('/admindashboard', function () {
+    return view('dashboards.adminDashboard');
+})->name('adminDashboard');
+
+
 Route::controller(AuthController::class)->group(function () {
     Route::get('/auth/login', 'login')->name('login');
     Route::post('/auth/login', 'authenticate')->name('login.authenticate');

@@ -11,6 +11,9 @@ Route::get('/', function () {
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
+Route::get('/userdashboard', function () {
+    return view('dashboards.userDashboard');
+})->name('userDashboard');
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/auth/login', 'login')->name('login');

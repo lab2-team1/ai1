@@ -564,3 +564,64 @@ a.btn-primary{
 .dropdown-content a:hover {
     background-color: #f1f1f1;
 }
+
+/* User dashboard */
+.user-panel {
+    display: flex;
+    height: calc(100vh - 4rem);
+    padding-top: 4rem;
+}
+
+.user-sidebar {
+    background: #f5f5f5;
+    border-right: 1px solid #e3e3e0;
+    width: 20rem;               
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.user-sidebar ul {
+    list-style: none;
+}
+.user-sidebar li {
+    margin: 1rem 0;
+}
+.user-sidebar a {
+    text-decoration: none;
+    font-weight: 500;
+    color: #1b1b18;
+    padding: 1rem 6rem; 
+    display: block;     
+    transition: all 0.2s ease;
+    border-radius: 0.5rem; 
+}
+
+.user-sidebar a:hover {
+    color: #000;
+    background-color: #e0e0e0; 
+}
+
+/* Prawa zawartość */
+.user-content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+}
+.user-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+}
+.user-field label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+.user-field input {
+    padding: 0.5rem;
+    border: 1px solid #e3e3e0;
+    border-radius: 0.25rem;
+}
+.user-field input:focus {
+    outline: none;
+    border-color: #1b1b18;
+}

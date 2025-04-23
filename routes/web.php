@@ -34,3 +34,10 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
     Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->name('listings.edit');
     Route::put('/listings/{listing}', [ListingController::class, 'update'])->name('listings.update');
 });
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboards.admindashboard');
+    })->name('dashboard');
+
+    Route::resource('categories', CategoryController::class);
+});

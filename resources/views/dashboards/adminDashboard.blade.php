@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    @include('shared.head', ['pageTitle' => 'MarketPlace - Buy and Sell with Ease'])
+    @include('shared.head', ['pageTitle' => 'Admin Dashboard'])
     <body>
         <!-- Navigation -->
         @include('shared.navigation')
 
         <div class="admin-panel">
-        @include('shared.adminSidebar')
-        <section class="admin-content">
-            <h1>ADMIN PANEL</h1>
-            
-        </section>
+            @include('shared.adminSidebar')
+            <section class="admin-content">
+                @yield('admin-content')
+            </section>
         </div>
 
-        <!-- footer -->
+        <!-- Footer -->
         @include('shared.footer')
-
     </body>
 </html>

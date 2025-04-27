@@ -29,3 +29,8 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::resource('categories', CategoryController::class);
 Route::resource('listings', ListingController::class);
+
+Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->name('listings.edit');
+    Route::put('/listings/{listing}', [ListingController::class, 'update'])->name('listings.update');
+});

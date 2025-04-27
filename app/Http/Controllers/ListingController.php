@@ -47,22 +47,36 @@ class ListingController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $listing = Listing::findOrFail($id);
+        return view('listings.edit', compact('listing'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
-    }
+        $listing = Listing::findOrFail($id);
 
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'status' => 'required|in:' . implode(',', Listing::$statuses),
+        ]);
+
+        $listing->update($validated);
+
+        return redirect()->route('listings.edit', $listing)->with('success', 'Ogłoszenie zaktualizowane!');
+    }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $listing = Listing::findOrFail($id);
+        $listing->delete();
+
+        return redirect()->route('listings.index')->with('success', 'Ogłoszenie zostało usunięte.');
     }
 }

@@ -826,3 +826,91 @@ a.btn-primary{
 .submit-button:hover {
     background-color: #000;
 }
+
+/* Stylowanie szczegółów ogłoszenia */
+.listing-details {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e3e3e0;
+}
+
+.detail-group {
+    margin-bottom: 2rem;
+}
+
+.detail-group h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1b1b18;
+    margin-bottom: 1rem;
+}
+
+.listing-description {
+    color: #706f6c;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.detail-group h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1b1b18;
+    margin-bottom: 1rem;
+}
+
+.listing-info {
+    list-style: none;
+    padding: 0;
+}
+
+.listing-info li {
+    margin-bottom: 0.5rem;
+    color: #706f6c;
+}
+
+.listing-info strong {
+    color: #1b1b18;
+}
+
+.detail-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-primary {
+    background-color: #1b1b18;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #000;
+}
+
+.btn-danger {
+    background-color: #dc2626;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-danger:hover {
+    background-color: #b91c1c;
+}

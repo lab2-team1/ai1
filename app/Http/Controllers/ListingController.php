@@ -50,7 +50,8 @@ class ListingController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $listing = Listing::findOrFail($id);
+        return view('listings.show', compact('listing'));
     }
 
     /**

@@ -23,7 +23,7 @@ class ListingController extends Controller
      */
     public function create()
     {
-        //
+        return view('listings.create');
     }
 
     /**
@@ -31,7 +31,18 @@ class ListingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'status' => 'required|in:' . implode(',', \App\Models\Listing::$statuses),
+            'user_id' => 'required|exists:users,id',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        \App\Models\Listing::create($validated);
+
+        return redirect()->route('listings.index')->with('success', 'Ogłoszenie dodane!');
     }
 
     /**
@@ -79,4 +90,6 @@ class ListingController extends Controller
 
         return redirect()->route('listings.index')->with('success', 'Ogłoszenie zostało usunięte.');
     }
+
+
 }

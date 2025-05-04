@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ListingController;
 
 Route::get('/', function () {
     return view('index');
@@ -27,3 +28,9 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::resource('categories', CategoryController::class);
+Route::resource('listings', ListingController::class);
+
+Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->name('listings.edit');
+    Route::put('/listings/{listing}', [ListingController::class, 'update'])->name('listings.update');
+});

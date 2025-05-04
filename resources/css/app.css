@@ -575,7 +575,7 @@ a.btn-primary{
 .user-sidebar {
     background: #f5f5f5;
     border-right: 1px solid #e3e3e0;
-    width: 20rem;               
+    width: 20rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -590,15 +590,15 @@ a.btn-primary{
     text-decoration: none;
     font-weight: 500;
     color: #1b1b18;
-    padding: 1rem 6rem; 
-    display: block;     
+    padding: 1rem 6rem;
+    display: block;
     transition: all 0.2s ease;
-    border-radius: 0.5rem; 
+    border-radius: 0.5rem;
 }
 
 .user-sidebar a:hover {
     color: #000;
-    background-color: #e0e0e0; 
+    background-color: #e0e0e0;
 }
 
 .user-content {
@@ -630,13 +630,13 @@ a.btn-primary{
 .admin-panel {
     display: flex;
     height: calc(100vh - 4rem);
-    padding-top: 4rem; 
+    padding-top: 4rem;
   }
-  
+
   .admin-sidebar {
     background: #f5f5f5;
     border-right: 1px solid #e3e3e0;
-    width: 20rem;               
+    width: 20rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -651,37 +651,266 @@ a.btn-primary{
     text-decoration: none;
     font-weight: 500;
     color: #1b1b18;
-    padding: 1rem 6rem; 
-    display: block;     
+    padding: 1rem 6rem;
+    display: block;
     transition: all 0.2s ease;
-    border-radius: 0.5rem; 
+    border-radius: 0.5rem;
   }
-  
+
   .admin-sidebar a:hover {
     color: #000;
-    background-color: #e0e0e0; 
+    background-color: #e0e0e0;
   }
-  
+
   .admin-content {
     flex: 1;
     padding: 2rem;
     overflow-y: auto;
   }
-  .admin-field {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1.5rem;
+
+  .admin-content h1 {
+    margin-bottom: 2rem;
+    font-size: 1.875rem;
+    font-weight: bold;
+    color: #1b1b18;
   }
-  .admin-field label {
+
+  .admin-content .btn-primary {
+    max-width: 200px;
+    margin-bottom: 1rem;
+    display: inline-block;
+  }
+
+  .admin-table-container {
+    overflow-x: auto;
+  }
+
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    margin-bottom: 2rem;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e3e3e0;
+  }
+
+  .admin-table th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+    color: #1b1b18;
+  }
+
+  .admin-table tr:hover {
+    background-color: #f9f9f9;
+  }
+
+  .admin-actions {
+    white-space: nowrap;
+  }
+
+  .admin-actions a,
+  .admin-actions button {
+    margin-left: 10px;
+    color: #1b1b18;
+    text-decoration: none;
+  }
+
+  .admin-actions a:first-child,
+  .admin-actions button:first-child {
+    margin-left: 0;
+  }
+
+  .admin-actions a:hover {
+    color: #000;
+  }
+
+  .admin-actions button {
+    background: none;
+    border: none;
+    color: #c00;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .admin-actions button:hover {
+    color: #900;
+  }
+
+  .admin-table .empty-message {
+    text-align: center;
+    padding: 2rem;
+    color: #706f6c;
+  }
+
+  /* Stylowanie formularza edycji ogłoszenia */
+.edit-form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e3e3e0;
+}
+
+.edit-form h1 {
+    margin-bottom: 2rem;
+    font-size: 1.875rem;
+    font-weight: bold;
+    color: #1b1b18;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
-  }
-  .admin-field input {
-    padding: 0.5rem;
+    color: #1b1b18;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.75rem;
     border: 1px solid #e3e3e0;
-    border-radius: 0.25rem;
-  }
-  .admin-field input:focus {
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
     outline: none;
     border-color: #1b1b18;
-  }
+}
+
+.form-group textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.error-message {
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.success-message {
+    color: #059669;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+.submit-button {
+    background-color: #1b1b18;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+    background-color: #000;
+}
+
+/* Stylowanie szczegółów ogłoszenia */
+.listing-details {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e3e3e0;
+}
+
+.detail-group {
+    margin-bottom: 2rem;
+}
+
+.detail-group h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1b1b18;
+    margin-bottom: 1rem;
+}
+
+.listing-description {
+    color: #706f6c;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.detail-group h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1b1b18;
+    margin-bottom: 1rem;
+}
+
+.listing-info {
+    list-style: none;
+    padding: 0;
+}
+
+.listing-info li {
+    margin-bottom: 0.5rem;
+    color: #706f6c;
+}
+
+.listing-info strong {
+    color: #1b1b18;
+}
+
+.detail-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-primary {
+    background-color: #1b1b18;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #000;
+}
+
+.btn-danger {
+    background-color: #dc2626;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-danger:hover {
+    background-color: #b91c1c;
+}

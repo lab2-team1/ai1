@@ -16,11 +16,6 @@ Route::get('/userdashboard', function () {
     return view('dashboards.userDashboard');
 })->name('userDashboard');
 
-Route::get('/admindashboard', function () {
-    return view('dashboards.adminDashboard');
-})->name('adminDashboard');
-
-
 Route::controller(AuthController::class)->group(function () {
     Route::get('/auth/login', 'login')->name('login');
     Route::post('/auth/login', 'authenticate')->name('login.authenticate');
@@ -33,11 +28,11 @@ Route::resource('listings', ListingController::class);
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->name('listings.edit');
     Route::put('/listings/{listing}', [ListingController::class, 'update'])->name('listings.update');
-});
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
+        Route::get('/dashboard', function () {
         return view('dashboards.admindashboard');
     })->name('dashboard');
+});
+Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('categories', CategoryController::class);
 });

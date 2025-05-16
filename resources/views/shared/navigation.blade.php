@@ -11,7 +11,7 @@
                             <div class="dropdown-content">
                                 <a href="{{ route('userDashboard') }}">User Panel</a>
                                 @can('is-admin') 
-                                <a href="{{ route('adminDashboard') }}">Admin Panel</a>
+                                <a href="{{ route('admin.dashboard') }}">Admin Panel</a>
                                 @endcan 
                                 <a href="{{ route('logout') }}">Log out!</a>
                             </div>

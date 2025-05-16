@@ -9,7 +9,7 @@
                             <span>{{ Auth::user()->first_name }}</span>
                             <i class="fa-solid fa-user user-icon"></i>
                             <div class="dropdown-content">
-                                <a href="{{ route('userDashboard') }}">User Panel</a>
+                                <a href="{{ route('user.dashboard') }}">User Panel</a>
                                 @can('is-admin') 
                                 <a href="{{ route('admin.dashboard') }}">Admin Panel</a>
                                 @endcan 

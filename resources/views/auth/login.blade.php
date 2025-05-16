@@ -30,6 +30,9 @@
                         <button type="submit" class="btn btn-primary">Log in</button>
                     </div>
                 </form>
+                <div class="form-group text-center mt-3">
+                        <p>Nie masz jeszcze konta? <a href="{{ route('register') }}">Zarejestruj się</a></p>
+                    </div>
             </div>
         </div>
     </div>

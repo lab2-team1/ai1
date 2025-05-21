@@ -5,6 +5,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\Admin\AddressController;
 
 Route::get('/', function () {
     return view('index');
@@ -40,4 +41,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
     })->name('dashboard');
 
     Route::resource('categories', CategoryController::class);
+    Route::resource('addresses', AddressController::class);
 });

@@ -47,6 +47,23 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'admin' => 'boolean',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
         ];
+    }
+    //Function that unifies a phone number into one format
+    public function setPhoneAttribute($value)
+    {
+        $phone = preg_replace('/[^0-9]/', '', $value);
+        
+        if (substr($phone, 0, 2) === '48') {
+            $phone = substr($phone, 2);
+        }
+        
+        if (strlen($phone) === 9) {
+            $this->attributes['phone'] = substr($phone, 0, 3) . '-' . substr($phone, 3, 3) . '-' . substr($phone, 6, 3);
+        } else {
+            $this->attributes['phone'] = $value;
+        }
     }
 }

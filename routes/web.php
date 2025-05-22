@@ -5,6 +5,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\Admin\UserController;
 
 Route::get('/', function () {
     return view('index');
@@ -35,6 +36,7 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
     Route::get('/dashboard', function () {
         return view('dashboards.admindashboard');
     })->name('dashboard');
+    Route::resource('users', UserController::class);
 });
 
 Route::prefix('admin')->name('admin.')->group(function () {

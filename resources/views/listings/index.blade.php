@@ -9,7 +9,7 @@
             @include('shared.adminSidebar')
             <section class="admin-content">
                 <h1>Zarządzanie ogłoszeniami</h1>
-                <a href="{{ route('listings.create') }}" class="btn-primary">Dodaj nowe ogłoszenie</a>
+                <a href="{{ route('admin.listings.create') }}" class="btn-primary">Dodaj nowe ogłoszenie</a>
                 <div class="admin-table-container">
                     <table class="admin-table">
                         <thead>
@@ -33,9 +33,9 @@
                                     <td>{{ $listing->formatted_price ?? number_format($listing->price, 2) . ' PLN' }}</td>
                                     <td>{{ ucfirst($listing->status) }}</td>
                                     <td class="admin-actions">
-                                        <a href="{{ route('listings.show', $listing->id) }}" title="Podgląd"><i class="fa fa-eye"></i></a>
-                                        <a href="{{ route('listings.edit', $listing->id) }}" title="Edytuj"><i class="fa fa-edit"></i></a>
-                                        <form action="{{ route('listings.destroy', $listing->id) }}" method="POST" style="display:inline;">
+                                        <a href="{{ route('admin.listings.show', $listing->id) }}" title="Podgląd"><i class="fa fa-eye"></i></a>
+                                        <a href="{{ route('admin.listings.edit', $listing->id) }}" title="Edytuj"><i class="fa fa-edit"></i></a>
+                                        <form action="{{ route('admin.listings.destroy', $listing->id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" title="Usuń" onclick="return confirm('Na pewno usunąć to ogłoszenie?')">

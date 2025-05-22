@@ -13,7 +13,7 @@
                     <div style="color: green;">{{ session('success') }}</div>
                 @endif
 
-                <form method="POST" action="{{ route('listings.store') }}" class="edit-form">
+                <form method="POST" action="{{ route('admin.listings.store') }}" class="edit-form">
                     @csrf
 
                     <div class="form-group">

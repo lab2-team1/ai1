@@ -42,7 +42,7 @@ class ListingController extends Controller
 
         \App\Models\Listing::create($validated);
 
-        return redirect()->route('listings.index')->with('success', 'Ogłoszenie dodane!');
+        return redirect()->route('admin.listings.index')->with('success', 'Ogłoszenie dodane!');
     }
 
     /**
@@ -79,7 +79,7 @@ class ListingController extends Controller
 
         $listing->update($validated);
 
-        return redirect()->route('listings.edit', $listing)->with('success', 'Ogłoszenie zaktualizowane!');
+        return redirect()->route('admin.listings.edit', $listing)->with('success', 'Ogłoszenie zaktualizowane!');
     }
     /**
      * Remove the specified resource from storage.
@@ -89,7 +89,7 @@ class ListingController extends Controller
         $listing = Listing::findOrFail($id);
         $listing->delete();
 
-        return redirect()->route('listings.index')->with('success', 'Ogłoszenie zostało usunięte.');
+        return redirect()->route('admin.listings.index')->with('success', 'Ogłoszenie zostało usunięte.');
     }
 
 

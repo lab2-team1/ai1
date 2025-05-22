@@ -13,7 +13,7 @@
                     <div style="color: green;">{{ session('success') }}</div>
                 @endif
 
-                <form method="POST" action="{{ route('listings.update', $listing->id) }}" class="edit-form">
+                <form method="POST" action="{{ route('admin.listings.update', $listing->id) }}" class="edit-form">
                     @csrf
                     @method('PUT')
 

@@ -27,8 +27,8 @@
                     </div>
 
                     <div class="detail-actions">
-                        <a href="{{ route('listings.edit', $listing->id) }}" class="btn-primary">Edytuj</a>
-                        <form action="{{ route('listings.destroy', $listing->id) }}" method="POST" style="display: inline;">
+                        <a href="{{ route('admin.listings.edit', $listing->id) }}" class="btn-primary">Edytuj</a>
+                        <form action="{{ route('admin.listings.destroy', $listing->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn-danger" onclick="return confirm('Na pewno usunąć to ogłoszenie?')">Usuń</button>

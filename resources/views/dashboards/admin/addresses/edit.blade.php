@@ -6,9 +6,9 @@
         @csrf
         @method('PUT')
         <div class="form-group">
-            <label for="user_id">Użytkownik:</label>
+            <label for="user_id">User:</label>
             <select id="user_id" name="user_id" class="form-control" required>
-                <option value="">Wybierz użytkownika</option>
+                <option value="">Select user</option>
                 @foreach($users as $user)
                     <option value="{{ $user->id }}" {{ $address->user_id == $user->id ? 'selected' : '' }}>
                         {{ $user->first_name }} {{ $user->last_name }}
@@ -21,7 +21,7 @@
         </div>
 
         <div class="form-group">
-            <label for="street">Ulica:</label>
+            <label for="street">Street:</label>
             <input type="text" id="street" name="street" class="form-control" value="{{ $address->street }}" required>
             @error('street')
                 <div class="error-message">{{ $message }}</div>
@@ -29,7 +29,7 @@
         </div>
 
         <div class="form-group">
-            <label for="city">Miasto:</label>
+            <label for="city">City:</label>
             <input type="text" id="city" name="city" class="form-control" value="{{ $address->city }}" required>
             @error('city')
                 <div class="error-message">{{ $message }}</div>
@@ -37,7 +37,7 @@
         </div>
 
         <div class="form-group">
-            <label for="zip_code">Kod pocztowy:</label>
+            <label for="zip_code">Zip code:</label>
             <input type="text" id="zip_code" name="zip_code" class="form-control"
                    value="{{ $address->zip_code }}" placeholder="00-000"
                    pattern="\d{2}-\d{3}"
@@ -48,13 +48,13 @@
         </div>
 
         <div class="form-group">
-            <label for="country">Kraj:</label>
+            <label for="country">Country:</label>
             <input type="text" id="country" name="country" class="form-control" value="{{ $address->country }}" required>
             @error('country')
                 <div class="error-message">{{ $message }}</div>
             @enderror
         </div>
 
-        <button type="submit" class="btn-primary">Zaktualizuj adres</button>
+        <button type="submit" class="btn-primary">Add address</button>
     </form>
 @endsection

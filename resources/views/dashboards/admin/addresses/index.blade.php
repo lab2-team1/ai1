@@ -1,19 +1,19 @@
 @extends('dashboards.admindashboard')
 
 @section('admin-content')
-    <h1>Zarządzanie adresami</h1>
-    <a href="{{ route('admin.addresses.create') }}" class="btn-primary">Dodaj nowy adres</a>
+    <h1>Address management</h1>
+    <a href="{{ route('admin.addresses.create') }}" class="btn-primary">Add new user</a>
     <div class="admin-table-container">
         <table class="admin-table">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Użytkownik</th>
-                    <th>Ulica</th>
-                    <th>Miasto</th>
-                    <th>Kod pocztowy</th>
-                    <th>Kraj</th>
-                    <th>Akcje</th>
+                    <th>User</th>
+                    <th>Street</th>
+                    <th>City</th>
+                    <th>Zip code</th>
+                    <th>Country</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,7 +38,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="empty-message">Brak adresów do wyświetlenia.</td>
+                        <td colspan="7" class="empty-message">No addresses to display.</td>
                     </tr>
                 @endforelse
             </tbody>

@@ -29,9 +29,6 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/auth/register', 'store')->name('register.store');
 });
 
-Route::resource('categories', CategoryController::class);
-Route::resource('listings', ListingController::class);
-
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->name('listings.edit');
     Route::put('/listings/{listing}', [ListingController::class, 'update'])->name('listings.update');
@@ -39,9 +36,7 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
         return view('dashboards.admindashboard');
     })->name('dashboard');
     Route::resource('users', UserController::class);
-});
-
-Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('addresses', AddressController::class);
+    Route::resource('listings', ListingController::class);
 });

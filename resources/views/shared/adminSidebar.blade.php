@@ -3,6 +3,7 @@
         <li><a href="{{ route('admin.users.index') }}">Manage Users</a></li>
         <li><a href="{{ route('listings.index') }}">Manage Listings</a></li>
         <li><a href="{{ route('admin.categories.index') }}">Manage Categories</a></li>
+        <li><a href="{{ route('admin.addresses.index') }}">Manage Addresses</a></li>
         <li><a href="#">Manage ..</a></li>
         <li><a href="#">Manage ..</a></li>
     </ul>

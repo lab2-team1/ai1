@@ -5,7 +5,9 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\Admin\AddressController;
 use App\Http\Controllers\Admin\UserController;
+
 
 Route::get('/', function () {
     return view('index');
@@ -27,9 +29,6 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/auth/register', 'store')->name('register.store');
 });
 
-Route::resource('categories', CategoryController::class);
-Route::resource('listings', ListingController::class);
-
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->name('listings.edit');
     Route::put('/listings/{listing}', [ListingController::class, 'update'])->name('listings.update');
@@ -37,8 +36,7 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
         return view('dashboards.admindashboard');
     })->name('dashboard');
     Route::resource('users', UserController::class);
-});
-
-Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('categories', CategoryController::class);
+    Route::resource('addresses', AddressController::class);
+    Route::resource('listings', ListingController::class);
 });

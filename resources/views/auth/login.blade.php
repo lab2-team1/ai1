@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-@include('shared.head', ['pageTitle' => 'Zaloguj się'])
+@include('shared.head', ['pageTitle' => 'Log in'])
 
 <body>
     @include('shared.navigation')
@@ -30,6 +30,9 @@
                         <button type="submit" class="btn btn-primary">Log in</button>
                     </div>
                 </form>
+                <div class="form-group text-center mt-3">
+                        <p>Don't have an account yet? <a href="{{ route('register') }}">Register</a></p>
+                    </div>
             </div>
         </div>
     </div>

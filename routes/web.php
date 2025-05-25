@@ -5,9 +5,12 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ListingController;
-use App\Http\Controllers\Admin\AddressController;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\UserController;
 
+use App\Http\Controllers\Admin\AddressController as Admin_AddressController;
+use App\Http\Controllers\Admin\UserController as Admin_UserController;
+
+Route::resource('users', UserController::class)->only(['index', 'show']);
 
 Route::get('/', function () {
     return view('index');
@@ -35,8 +38,10 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
     Route::get('/dashboard', function () {
         return view('dashboards.admindashboard');
     })->name('dashboard');
-    Route::resource('users', UserController::class);
+    Route::resource('users', Admin_UserController::class);
     Route::resource('categories', CategoryController::class);
-    Route::resource('addresses', AddressController::class);
+    Route::resource('addresses', Admin_AddressController::class);
     Route::resource('listings', ListingController::class);
 });
+
+

@@ -39,4 +39,5 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
     Route::resource('categories', CategoryController::class);
     Route::resource('addresses', AddressController::class);
     Route::resource('listings', ListingController::class);
+
 });

@@ -14,7 +14,7 @@ class ListingController extends Controller
     public function index()
     {
         return view('listings.index', [
-            'listings' => Listing::all()
+            'listings' => Listing::with(['user', 'category'])->get()
         ]);
     }
 
@@ -81,6 +81,7 @@ class ListingController extends Controller
 
         return redirect()->route('admin.listings.edit', $listing)->with('success', 'Ogłoszenie zaktualizowane!');
     }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -91,6 +92,4 @@ class ListingController extends Controller
 
         return redirect()->route('admin.listings.index')->with('success', 'Ogłoszenie zostało usunięte.');
     }
-
-
 }

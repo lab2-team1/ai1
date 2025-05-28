@@ -18,69 +18,37 @@
                     </form>
                 </div>
 
-                <!-- Filters -->
-                <div class="filters-container">
-                    <div class="filters-grid">
-                        <div class="filter-group">
-                            <label class="filter-label">Category</label>
-                            <select class="filter-input">
-                                <option value="">All Categories</option>
-                                <option value="electronics">Electronics</option>
-                                <option value="fashion">Fashion</option>
-                                <option value="home">Home & Garden</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label class="filter-label">Location</label>
-                            <input type="text" class="filter-input" placeholder="Enter location">
-                        </div>
-                        <div class="filter-group">
-                            <label class="filter-label">Price Range</label>
-                            <div class="price-range-container">
-                                <input type="number" class="price-range-input" placeholder="Min">
-                                <span class="price-range-separator">to</span>
-                                <input type="number" class="price-range-input" placeholder="Max">
-                            </div>
-                        </div>
-                        <div class="filter-group">
-                            <label class="filter-label">&nbsp;</label>
-                            <button class="filter-button">
-                                Apply Filters
-                            </button>
-                        </div>
+                <section class="categories">
+                    <h2>Kategorie</h2>
+                    <div class="category-grid">
+                        @foreach($categories as $category)
+                            <a href="{{ route('listings.index', ['category' => $category->id]) }}" class="category-card">
+                                <h3>{{ $category->name }}</h3>
+                                <p>{{ $category->description }}</p>
+                            </a>
+                        @endforeach
                     </div>
-                </div>
+                </section>
 
-                <!-- Featured Listings -->
-                <section>
-                    <div class="section-header">
-                        <h2 class="section-title">Featured Listings</h2>
-                        <p class="section-description">Discover our handpicked selection of quality items</p>
-                    </div>
-                    <div class="listings-grid">
-                        <!-- Listing Card 1 -->
-                        <div class="listing-card">
-                            <div class="listing-image"></div>
-                            <div class="listing-content">
-                                <h3 class="listing-title">iPhone 13 Pro Max</h3>
-                                <p class="listing-description">Like new condition, includes original box and accessories</p>
+                <section class="latest-listings">
+                    <h2>Najnowsze ogłoszenia</h2>
+                    <div class="listing-grid">
+                        @foreach($listings as $listing)
+                            <div class="listing-card">
+                                <div class="listing-header">
+                                    <h3>{{ $listing->title }}</h3>
+                                    <span class="listing-price">{{ number_format($listing->price, 2) }} zł</span>
+                                </div>
+                                <p class="listing-description">{{ Str::limit($listing->description, 100) }}</p>
                                 <div class="listing-footer">
-                                    <span class="listing-price">$899</span>
-                                    <span class="listing-date">2 days ago</span>
+                                    <span class="listing-category">{{ $listing->category->name }}</span>
+                                    <a href="{{ route('listings.show', $listing) }}" class="btn btn-secondary">Zobacz szczegóły</a>
                                 </div>
                             </div>
-                        </div>
-
+                        @endforeach
                     </div>
-                    <!-- Pagination -->
-                    <div class="pagination">
-                        <nav class="pagination-nav">
-                            <a href="#" class="pagination-link">Previous</a>
-                            <a href="#" class="pagination-link active">1</a>
-                            <a href="#" class="pagination-link">2</a>
-                            <a href="#" class="pagination-link">3</a>
-                            <a href="#" class="pagination-link">Next</a>
-                        </nav>
+                    <div class="text-center">
+                        <a href="{{ route('listings.index') }}" class="btn btn-primary">Zobacz wszystkie ogłoszenia</a>
                     </div>
                 </section>
             </div>

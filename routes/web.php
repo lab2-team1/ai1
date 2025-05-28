@@ -9,7 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AddressController;
 use App\Http\Controllers\Admin\UserController;
 
-Route::get('/', [HomeController::class, 'index'])->name('index');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 

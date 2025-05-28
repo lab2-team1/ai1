@@ -14,7 +14,8 @@ class ListingController extends Controller
     public function index()
     {
         return view('listings.index', [
-            'listings' => Listing::with(['user', 'category'])->get()
+            'listings' => Listing::with(['user', 'category'])->get(),
+            'categories' => \App\Models\Category::all()
         ]);
     }
 
@@ -50,8 +51,8 @@ class ListingController extends Controller
      */
     public function show(string $id)
     {
-        $listing = Listing::findOrFail($id);
-        return view('listings.show', compact('listing'));
+        $listing = Listing::with(['user', 'category'])->findOrFail($id);
+        return view('listing', compact('listing'));
     }
 
     /**

@@ -134,7 +134,7 @@ a.btn-primary{
 }
 
 .search-button:hover {
-    background-color: #1b1b18;
+    color: black;
 }
 
 /* Section headers */
@@ -206,17 +206,17 @@ a.btn-primary{
 
 .filter-button {
     padding: 0.5rem 1rem;
-    background: #2c5282;
+    background: black;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-weight: 500;
-    transition: background-color 0.2s;
+    transition: background-color 0.2;
 }
 
 .filter-button:hover {
-    background: #2b6cb0;
+    color: black;
 }
 
 .filter-button-secondary {
@@ -293,7 +293,7 @@ a.btn-primary{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
 .listing-price {
@@ -347,7 +347,7 @@ a.btn-primary{
     display: block;
     text-align: center;
     padding: 0.75rem;
-    background: #2c5282;
+    background: black;
     color: white;
     text-decoration: none;
     border-radius: 4px;
@@ -383,7 +383,7 @@ a.btn-primary{
 }
 
 .pagination .active {
-    background: #2c5282;
+    background: black;
     color: white;
     border-color: #2c5282;
 }
@@ -1091,149 +1091,19 @@ a.btn-primary{
     margin-top: 1rem;
 }
 
-/* Strona główna */
-.hero {
-    text-align: center;
-    padding: 4rem 0;
-    background-color: #f8f9fa;
+.btn-secondary {
+    background-color: black;
+    color: white;
+    padding: 0.5rem 1rem;
     border-radius: 0.5rem;
-    margin-bottom: 3rem;
-    border: 1px solid #e3e3e0;
-}
-
-.hero h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #1b1b18;
-}
-
-.hero p {
-    font-size: 1.2rem;
-    color: #706f6c;
-    margin-bottom: 2rem;
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.categories {
-    margin-bottom: 3rem;
-}
-
-.categories h2 {
-    font-size: 1.875rem;
-    font-weight: bold;
-    color: #1b1b18;
-    margin-bottom: 1.5rem;
-}
-
-.category-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-}
-
-.category-card {
-    background-color: white;
-    border: 1px solid #e3e3e0;
-    border-radius: 0.5rem;
-    padding: 1.5rem;
     text-decoration: none;
-    color: inherit;
-    transition: transform 0.2s, box-shadow 0.2s;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+    margin-left: 1rem;
 }
 
-.category-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.category-card h3 {
-    margin-bottom: 0.5rem;
-    color: #1b1b18;
-    font-size: 1.25rem;
-    font-weight: 600;
-}
-
-.category-card p {
-    color: #706f6c;
-    font-size: 0.9rem;
-}
-
-.latest-listings {
-    margin-bottom: 3rem;
-}
-
-.latest-listings h2 {
-    font-size: 1.875rem;
-    font-weight: bold;
-    color: #1b1b18;
-    margin-bottom: 1.5rem;
-}
-
-.listing-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-}
-
-.listing-card {
-    background-color: white;
-    border: 1px solid #e3e3e0;
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.listing-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.listing-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-}
-
-.listing-header h3 {
-    margin: 0;
-    font-size: 1.2rem;
-    color: #1b1b18;
-    font-weight: 600;
-}
-
-.listing-price {
-    font-weight: bold;
-    color: #2c5282;
-}
-
-.listing-description {
-    color: #706f6c;
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-    line-height: 1.5;
-}
-
-.listing-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.listing-category {
-    background-color: #f8f9fa;
-    padding: 0.25rem 0.75rem;
-    border-radius: 1rem;
-    font-size: 0.8rem;
-    color: #706f6c;
-}
-
-.text-center {
-    text-align: center;
-    margin-top: 2rem;
+.btn-secondary:hover {
+    color: black;
 }

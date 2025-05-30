@@ -6,15 +6,13 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
-
-use App\Http\Controllers\Admin\AddressController as Admin_AddressController;
-use App\Http\Controllers\Admin\UserController as Admin_UserController;
+use App\Http\Controllers\Admin\AddressController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\HomeController;
 
 Route::resource('users', UserController::class)->only(['index', 'show']);
 
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
@@ -44,4 +42,8 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
     Route::resource('listings', ListingController::class);
 });
 
+
+// Public routes
+Route::get('/listings', [ListingController::class, 'index'])->name('listings.index');
+Route::get('/listings/{listing}', [ListingController::class, 'show'])->name('listings.show');
 

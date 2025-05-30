@@ -6,23 +6,12 @@ use App\Models\Listing;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
-class SearchController extends Controller
+class HomeController extends Controller
 {
-    public function search(Request $request)
+    public function index(Request $request)
     {
         $query = Listing::with(['user', 'category'])
             ->where('status', Listing::STATUS_ACTIVE);
-
-        if ($request->filled('query')) {
-            $searchTerm = $request->input('query');
-            $query->where(function($q) use ($searchTerm) {
-                $q->where('title', 'like', '%' . $searchTerm . '%')
-                  ->orWhere('description', 'like', '%' . $searchTerm . '%')
-                  ->orWhereHas('category', function($q) use ($searchTerm) {
-                      $q->where('name', 'like', '%' . $searchTerm . '%');
-                  });
-            });
-        }
 
         // Category filter
         if ($request->filled('category')) {

@@ -13,7 +13,7 @@ class AuthController extends Controller
     public function login()
     {
         if (Auth::check()) {
-            return redirect()->route('index');
+            return redirect()->route('home');
         }
         return view('auth.login');
     }
@@ -21,7 +21,7 @@ class AuthController extends Controller
     public function register()
     {
         if (Auth::check()) {
-            return redirect()->route('index');
+            return redirect()->route('home');
         }
         return view('auth.register');
     }
@@ -41,7 +41,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('index');
+            return redirect()->route('home');
         }
 
         return back()->withErrors([
@@ -86,7 +86,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('index')->with('success', 'Konto zostało utworzone pomyślnie!');
+        return redirect()->route('home')->with('success', 'Konto zostało utworzone pomyślnie!');
     }
 
     public function logout(Request $request)
@@ -94,7 +94,7 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('index');
+        return redirect()->route('home');
     }
 
 }

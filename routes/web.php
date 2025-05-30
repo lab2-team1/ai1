@@ -6,8 +6,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\Admin\AddressController;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\AddressController as Admin_AddressController;
+use App\Http\Controllers\Admin\UserController as Admin_UserController;
 use App\Http\Controllers\HomeController;
 
 Route::resource('users', UserController::class)->only(['index', 'show']);

@@ -4,11 +4,8 @@
     <body>
         @include('shared.navigation')
 
-        <div class="admin-panel">
-            @include('shared.adminSidebar')
-            <section class="admin-content">
-                <h1>Szczegóły ogłoszenia</h1>
-
+        <main class="main-content">
+            <div class="container">
                 <div class="listing-details">
                     <div class="detail-group">
                         <h2>{{ $listing->title }}</h2>
@@ -26,17 +23,21 @@
                         </ul>
                     </div>
 
-                    <div class="detail-actions">
-                        <a href="{{ route('admin.listings.edit', $listing->id) }}" class="btn-primary">Edytuj</a>
-                        <form action="{{ route('admin.listings.destroy', $listing->id) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn-danger" onclick="return confirm('Na pewno usunąć to ogłoszenie?')">Usuń</button>
-                        </form>
-                    </div>
+                    @auth
+                        @if(auth()->user()->id === $listing->user_id)
+                            <div class="detail-actions">
+                                <a href="{{ route('admin.listings.edit', $listing->id) }}" class="btn-primary">Edytuj</a>
+                                <form action="{{ route('admin.listings.destroy', $listing->id) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-danger" onclick="return confirm('Na pewno usunąć to ogłoszenie?')">Usuń</button>
+                                </form>
+                            </div>
+                        @endif
+                    @endauth
                 </div>
-            </section>
-        </div>
+            </div>
+        </main>
 
         @include('shared.footer')
     </body>

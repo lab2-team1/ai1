@@ -10,77 +10,81 @@
             <div class="container">
                 <!-- Search Bar -->
                 <div class="search-container">
-                    <form class="search-form">
+                    <form action="{{ route('search') }}" method="GET" class="search-form">
                         <div class="search-input-group">
-                            <input type="text" class="search-input" placeholder="Search for anything...">
+                            <input type="text" name="query" class="search-input" placeholder="Search for anything..." value="{{ request('query') }}">
                             <button type="submit" class="search-button">Search</button>
                         </div>
                     </form>
                 </div>
 
-                <!-- Filters -->
                 <div class="filters-container">
-                    <div class="filters-grid">
+                    <form action="{{ route('home') }}" method="GET" class="filters-grid">
                         <div class="filter-group">
                             <label class="filter-label">Category</label>
-                            <select class="filter-input">
+                            <select name="category" class="filter-input">
                                 <option value="">All Categories</option>
-                                <option value="electronics">Electronics</option>
-                                <option value="fashion">Fashion</option>
-                                <option value="home">Home & Garden</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="filter-group">
                             <label class="filter-label">Location</label>
-                            <input type="text" class="filter-input" placeholder="Enter location">
+                            <input type="text" name="location" class="filter-input" placeholder="Enter location" value="{{ request('location') }}">
                         </div>
                         <div class="filter-group">
                             <label class="filter-label">Price Range</label>
                             <div class="price-range-container">
-                                <input type="number" class="price-range-input" placeholder="Min">
+                                <input type="number" name="min_price" class="price-range-input" placeholder="Min" value="{{ request('min_price') }}">
                                 <span class="price-range-separator">to</span>
-                                <input type="number" class="price-range-input" placeholder="Max">
+                                <input type="number" name="max_price" class="price-range-input" placeholder="Max" value="{{ request('max_price') }}">
                             </div>
                         </div>
                         <div class="filter-group">
+                            <label class="filter-label">Sort by</label>
+                            <select name="sort" class="filter-input" id="sort-select">
+                                <option value="">Select sorting</option>
+                                <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Price: Low to High</option>
+                                <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Price: High to Low</option>
+                                <option value="date_desc" {{ request('sort') == 'date_desc' ? 'selected' : '' }}>Newest First</option>
+                                <option value="date_asc" {{ request('sort') == 'date_asc' ? 'selected' : '' }}>Oldest First</option>
+                                <option value="title_asc" {{ request('sort') == 'title_asc' ? 'selected' : '' }}>Title: A to Z</option>
+                                <option value="title_desc" {{ request('sort') == 'title_desc' ? 'selected' : '' }}>Title: Z to A</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
                             <label class="filter-label">&nbsp;</label>
-                            <button class="filter-button">
+                            <button type="submit" class="filter-button">
                                 Apply Filters
                             </button>
                         </div>
-                    </div>
+                    </form>
                 </div>
 
-                <!-- Featured Listings -->
-                <section>
-                    <div class="section-header">
-                        <h2 class="section-title">Featured Listings</h2>
-                        <p class="section-description">Discover our handpicked selection of quality items</p>
-                    </div>
+                <section class="latest-listings">
+                    <h2>Najnowsze ogłoszenia</h2>
                     <div class="listings-grid">
-                        <!-- Listing Card 1 -->
-                        <div class="listing-card">
-                            <div class="listing-image"></div>
-                            <div class="listing-content">
-                                <h3 class="listing-title">iPhone 13 Pro Max</h3>
-                                <p class="listing-description">Like new condition, includes original box and accessories</p>
-                                <div class="listing-footer">
-                                    <span class="listing-price">$899</span>
-                                    <span class="listing-date">2 days ago</span>
+                        @foreach($listings as $listing)
+                            <div class="listing-card">
+                                <div class="listing-image"></div>
+                                <div class="listing-content">
+                                    <h3 class="listing-title">{{ $listing->title }}</h3>
+                                    <p class="listing-description">{{ Str::limit($listing->description, 100) }}</p>
+                                    <span class="listing-category">{{ $listing->category->name }}</span>
+                                    <a href="{{ route('listings.show', $listing) }}" class="btn btn-secondary">Show details</a>
+                                    <div class="listing-footer">
+                                        <span class="listing-price">{{ number_format($listing->price, 2) }} zł</span>
+                                        <span class="listing-date" datetime="{{ $listing->created_at->toIso8601String() }}">{{ $listing->created_at->diffForHumans() }}</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
+                        @endforeach
                     </div>
-                    <!-- Pagination -->
-                    <div class="pagination">
-                        <nav class="pagination-nav">
-                            <a href="#" class="pagination-link">Previous</a>
-                            <a href="#" class="pagination-link active">1</a>
-                            <a href="#" class="pagination-link">2</a>
-                            <a href="#" class="pagination-link">3</a>
-                            <a href="#" class="pagination-link">Next</a>
-                        </nav>
+                    <div class="text-center">
+                        {{ $listings->links() }}
                     </div>
                 </section>
             </div>
@@ -88,6 +92,5 @@
 
         <!-- footer -->
         @include('shared.footer')
-
     </body>
 </html>

@@ -19,7 +19,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         
-        $addresses = $user ? $user->load('addresses')->addresses : new Collection();
+        $addresses = $user ? $user->addresses : new Collection();
 
         return view('dashboards.userDashboard', compact('user', 'addresses'));
     }

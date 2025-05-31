@@ -33,6 +33,15 @@
                                     <button type="submit" class="btn-danger" onclick="return confirm('Na pewno usunąć to ogłoszenie?')">Usuń</button>
                                 </form>
                             </div>
+                        @elseif(auth()->user()->id !== $listing->user_id && $listing->isActive())
+                            <form action="{{ route('listings.buy', $listing->id) }}" method="POST" style="margin-top: 20px;">
+                                @csrf
+                                <button type="submit" class="btn-primary">Kup teraz</button>
+                            </form>
+                        @endif
+                    @else
+                        @if($listing->isActive())
+                            <a href="{{ route('login') }}" class="btn-primary" style="margin-top: 20px; display: inline-block;">Kup teraz</a>
                         @endif
                     @endauth
                 </div>

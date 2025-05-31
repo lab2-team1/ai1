@@ -48,7 +48,8 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-        Log::info('Received update request', $request->all());
+        $safeFields = ['first_name', 'last_name', 'email', 'phone']; // Define safe fields to log
+        Log::info('Received update request', $request->only($safeFields));
         
         $user = Auth::user();
         Log::info('Current user', ['user_id' => $user->id]);

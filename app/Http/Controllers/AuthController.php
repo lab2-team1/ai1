@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use OTPHP\TOTP;
 
 class AuthController extends Controller
 {
-
     public function login()
     {
         if (Auth::check()) {
@@ -28,9 +28,6 @@ class AuthController extends Controller
 
     /**
      * Handle an authentication attempt.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function authenticate(Request $request)
     {
@@ -40,6 +37,15 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            // Jeśli użytkownik ma aktywne 2FA
+            if ($user->otp_secret) {
+                Auth::logout(); // Wyloguj z głównej sesji
+                $request->session()->put('2fa:user:id', $user->id); // Zapamiętaj user_id w sesji
+                return redirect()->route('2fa.verify');
+            }
+
             $request->session()->regenerate();
             return redirect()->route('home');
         }
@@ -49,6 +55,9 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
+    /**
+     * Rejestracja użytkownika.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -89,6 +98,9 @@ class AuthController extends Controller
         return redirect()->route('home')->with('success', 'Konto zostało utworzone pomyślnie!');
     }
 
+    /**
+     * Wylogowanie użytkownika.
+     */
     public function logout(Request $request)
     {
         Auth::logout();
@@ -97,4 +109,43 @@ class AuthController extends Controller
         return redirect()->route('home');
     }
 
+    /**
+     * Formularz do weryfikacji kodu 2FA.
+     */
+    public function show2faForm(Request $request)
+    {
+        if (!$request->session()->has('2fa:user:id')) {
+            return redirect()->route('login');
+        }
+        return view('auth.2fa');
+    }
+
+    /**
+     * Obsługa weryfikacji kodu 2FA.
+     */
+    public function verify2fa(Request $request)
+    {
+        $request->validate([
+            'otp_code' => 'required|string'
+        ]);
+
+        $userId = $request->session()->get('2fa:user:id');
+        $user = User::find($userId);
+
+        if (!$user || !$user->otp_secret) {
+            return redirect()->route('login')->withErrors(['otp_code' => 'Błąd weryfikacji 2FA.']);
+        }
+
+        $otp = TOTP::createFromSecret($user->otp_secret);
+
+        if ($otp->verify($request->input('otp_code'))) {
+            // Zaloguj użytkownika i usuń z sesji tymczasowy identyfikator
+            Auth::login($user);
+            $request->session()->forget('2fa:user:id');
+            $request->session()->regenerate();
+            return redirect()->intended(route('home'));
+        } else {
+            return back()->withErrors(['otp_code' => 'Nieprawidłowy kod.']);
+        }
+    }
 }

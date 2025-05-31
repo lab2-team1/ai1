@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
+use OTPHP\TOTP; // Dodane do obsługi OTP
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+use BaconQrCode\Writer;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -18,8 +24,7 @@ class UserController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
-        
-        $addresses = $user ? $user->addresses : new Collection();
+        $addresses = $user->addresses()->get();
 
         return view('dashboards.userDashboard', compact('user', 'addresses'));
     }
@@ -50,10 +55,10 @@ class UserController extends Controller
     {
         $safeFields = ['first_name', 'last_name', 'email', 'phone']; // Define safe fields to log
         Log::info('Received update request', $request->only($safeFields));
-        
+
         $user = Auth::user();
         Log::info('Current user', ['user_id' => $user->id]);
-        
+
         try {
             DB::beginTransaction();
 
@@ -74,10 +79,10 @@ class UserController extends Controller
             ];
 
             $validated = $request->validate([
-                'first_name' => 'required|string|max:50',
-                'last_name' => 'required|string|max:50',
-                'email' => 'required|string|email|max:100|unique:users,email,' . $user->id,
-                'phone' => 'nullable|string|max:20',
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+                'phone' => 'required|string|max:255',
             ], $messages);
 
             Log::info('Data validated successfully', $validated);
@@ -86,10 +91,10 @@ class UserController extends Controller
             foreach ($validated as $key => $value) {
                 if (isset($user->$key) && $user->$key !== $value) {
                     if ($key === 'phone') {
-                         if ($user->$key !== $value) {
-                              $hasChanges = true;
-                              break;
-                         }
+                        if ($user->$key !== $value) {
+                            $hasChanges = true;
+                            break;
+                        }
                     } else {
                         $hasChanges = true;
                         break;
@@ -104,13 +109,13 @@ class UserController extends Controller
             }
 
             $updated = $user->update($validated);
-            
+
             if (!$updated) {
                 throw new \Exception('Failed to update user data.');
             }
 
             Log::info('Data updated successfully', ['user_id' => $user->id]);
-            
+
             DB::commit();
 
             return redirect()->route('user.dashboard')
@@ -134,5 +139,97 @@ class UserController extends Controller
                 ->withInput()
                 ->withErrors(['error' => 'An error occurred while updating data: ' . $e->getMessage()]);
         }
+    }
+
+    /**
+     * Generowanie sekretu OTP dla 2FA.
+     */
+    public function generateOtpSecret(Request $request)
+    {
+        $user = Auth::user();
+
+        // Jeśli użytkownik już ma sekret, nie generuj nowego
+        if ($user->otp_secret) {
+            return redirect()->route('user.dashboard')
+                ->with('success', 'Dwuskładnikowe uwierzytelnianie jest już aktywne.');
+        }
+
+        // Generuj nowy sekret OTP
+        $otp = TOTP::generate();
+        $user->otp_secret = $otp->getSecret();
+        $user->save();
+
+        return redirect()->route('user.dashboard')
+            ->with('success', 'Sekret 2FA został wygenerowany. Zeskanuj kod QR poniżej.');
+    }
+
+    public function show2faSetup()
+    {
+        $user = Auth::user();
+        
+        if (!$user->otp_secret) {
+            $otp = TOTP::create();
+            $user->otp_secret = $otp->getSecret();
+            $user->save();
+        }
+
+        $otp = TOTP::createFromSecret($user->otp_secret);
+        $otp->setLabel($user->email);
+
+        // Generuj URL do kodu QR
+        $renderer = new ImageRenderer(
+            new RendererStyle(200), // Rozmiar obrazka
+            new \BaconQrCode\Renderer\Image\SvgImageBackEnd() // Użyj tego jeśli nie masz Imagick
+        );
+        $writer = new Writer($renderer);
+        $qrCodeImage = $writer->writeString($otp->getProvisioningUri());
+
+        // Zwróć obrazek jako URI danych
+        $qrCodeUrl = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
+
+        return view('auth.2fa', [
+            'qrCodeUrl' => $qrCodeUrl,
+            'secretKey' => $user->otp_secret
+        ]);
+    }
+
+    public function enable2fa(Request $request)
+    {
+        $request->validate([
+            'code' => 'required|string'
+        ]);
+
+        $user = Auth::user();
+        $otp = TOTP::createFromSecret($user->otp_secret);
+
+        if ($otp->verify($request->code)) {
+            $user->two_factor_enabled = true;
+            $user->save();
+
+            return redirect()->route('user.2fa')
+                ->with('success', 'Uwierzytelnianie dwuskładnikowe zostało włączone.');
+        }
+
+        return back()->withErrors(['code' => 'Nieprawidłowy kod weryfikacyjny.']);
+    }
+
+    public function disable2fa(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|string'
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->withErrors(['password' => 'Nieprawidłowe hasło.']);
+        }
+
+        $user->two_factor_enabled = false;
+        $user->otp_secret = null;
+        $user->save();
+
+        return redirect()->route('user.2fa')
+            ->with('success', 'Uwierzytelnianie dwuskładnikowe zostało wyłączone.');
     }
 }

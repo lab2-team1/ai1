@@ -18,10 +18,18 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
+// 2FA verification routes
+Route::get('/2fa/verify', [AuthController::class, 'show2faForm'])->name('2fa.verify');
+Route::post('/2fa/verify', [AuthController::class, 'verify2fa'])->name('2fa.verify.post');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/user/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
-    
     Route::put('/user/update', [UserController::class, 'update'])->name('user.update');
+
+    // 2FA Routes
+    Route::get('/user/2fa', [UserController::class, 'show2faSetup'])->name('user.2fa');
+    Route::post('/user/2fa/enable', [UserController::class, 'enable2fa'])->name('user.2fa.enable');
+    Route::post('/user/2fa/disable', [UserController::class, 'disable2fa'])->name('user.2fa.disable');
 
     // Routes for user addresses
     Route::resource('user/addresses', UserAddressController::class)->except(['show'])->names([
@@ -54,7 +62,6 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
     Route::resource('listings', ListingController::class);
 });
 
-
 // Public routes
 Route::get('/listings', [ListingController::class, 'index'])->name('listings.index');
 Route::get('/listings/{listing}', [ListingController::class, 'show'])->name('listings.show');
@@ -62,4 +69,3 @@ Route::post('/listings/{listing}/buy', [TransactionController::class, 'store'])-
 Route::get('/payment/choose/{transaction}', [TransactionController::class, 'choosePayment'])->middleware('auth')->name('payment.choose');
 Route::post('/payment/choose/{transaction}', [TransactionController::class, 'processPayment'])->middleware('auth')->name('payment.process');
 Route::get('/payment/confirmation/{transaction}', [TransactionController::class, 'confirmation'])->middleware('auth')->name('payment.confirmation');
-

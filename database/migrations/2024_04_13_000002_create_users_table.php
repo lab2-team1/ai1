@@ -19,9 +19,11 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone', 20)->nullable();
             $table->boolean('admin')->default(false);
+            $table->string('otp_secret')->nullable();
+            $table->boolean('two_factor_enabled')->default(false);
             $table->timestamps();
         });
-
+    
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->foreignId('user_id')->nullable()->index();
@@ -30,9 +32,7 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
-
     }
-
 
     /**
      * Reverse the migrations.
@@ -42,4 +42,4 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('sessions');
     }
-}; 
+};

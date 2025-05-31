@@ -76,9 +76,9 @@
 
             <h2>Your Addresses</h2>
 
-            @if(session('address_success'))
+            @if(session('success'))
                 <div class="alert alert-success">
-                    {{ session('address_success') }}
+                    {{ session('success') }}
                 </div>
             @endif
 

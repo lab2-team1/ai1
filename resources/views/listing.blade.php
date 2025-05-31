@@ -39,6 +39,10 @@
                                 <button type="submit" class="btn-primary">Kup teraz</button>
                             </form>
                         @endif
+                    @else
+                        @if($listing->isActive())
+                            <a href="{{ route('login') }}" class="btn-primary" style="margin-top: 20px; display: inline-block;">Kup teraz</a>
+                        @endif
                     @endauth
                 </div>
             </div>

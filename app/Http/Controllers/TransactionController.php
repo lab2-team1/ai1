@@ -33,6 +33,29 @@ class TransactionController extends Controller
 
         $listing->markAsSold();
 
-        return redirect()->route('user.dashboard')->with('success', 'Zakup zakończony sukcesem!');
+        return redirect()->route('payment.choose', ['transaction' => $transaction->id]);
+    }
+
+    public function choosePayment($transactionId)
+    {
+        $transaction = Transaction::findOrFail($transactionId);
+        return view('payment.choose', compact('transaction'));
+    }
+
+    public function processPayment(Request $request, $transactionId)
+    {
+        $transaction = Transaction::findOrFail($transactionId);
+        $request->validate([
+            'payment_method' => 'required|in:blik,bank_transfer,on_delivery',
+        ]);
+        $transaction->payment_method = $request->input('payment_method');
+        $transaction->save();
+        return redirect()->route('payment.confirmation', ['transaction' => $transaction->id]);
+    }
+
+    public function confirmation($transactionId)
+    {
+        $transaction = Transaction::findOrFail($transactionId);
+        return view('payment.confirmation', compact('transaction'));
     }
 }

@@ -8,6 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property \Illuminate\Database\Eloquent\Collection|\App\Models\Transaction[] $transactionsKupione
+ * @property \Illuminate\Database\Eloquent\Collection|\App\Models\Transaction[] $transactionsSprzedane
+ * @method \Illuminate\Database\Eloquent\Relations\HasMany transactionsKupione()
+ * @method \Illuminate\Database\Eloquent\Relations\HasMany transactionsSprzedane()
+ */
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -79,5 +85,15 @@ class User extends Authenticatable
     public function listings()
     {
         return $this->hasMany(\App\Models\Listing::class);
+    }
+
+    public function transactionsKupione()
+    {
+        return $this->hasMany(\App\Models\Transaction::class, 'buyer_id');
+    }
+
+    public function transactionsSprzedane()
+    {
+        return $this->hasMany(\App\Models\Transaction::class, 'seller_id');
     }
 }

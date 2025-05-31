@@ -70,7 +70,7 @@
 
                 <button type="submit" class="btn-primary" id="submitButton">Save</button>
             </form>
-            
+
             <br>
             <hr>
 
@@ -238,7 +238,7 @@
                 cancelAddAddressButton.addEventListener('click', function() {
                     addAddressFormContainer.style.display = 'none';
                     addAddressButton.style.display = 'block';
-                    addAddressForm.reset(); 
+                    addAddressForm.reset();
                 });
 
                 const editAddressFormContainer = document.getElementById('editAddressFormContainer');
@@ -269,7 +269,7 @@
                         editAddressForm.action = '/user/addresses/' + addressId;
 
                         editAddressFormContainer.style.display = 'block';
-                        addAddressButton.style.display = 'none'; 
+                        addAddressButton.style.display = 'none';
                          editAddressFormContainer.scrollIntoView({ behavior: 'smooth' });
                     });
                 });
@@ -277,7 +277,7 @@
                 cancelEditAddressButton.addEventListener('click', function() {
                     editAddressFormContainer.style.display = 'none';
                     addAddressButton.style.display = 'block';
-                    editAddressForm.reset(); 
+                    editAddressForm.reset();
                 });
             });
 

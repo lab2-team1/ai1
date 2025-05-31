@@ -20,7 +20,8 @@ Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/user/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
-    
+    Route::get('/user/transactions', [UserController::class, 'transactions'])->name('user.transactions');
+
     Route::put('/user/update', [UserController::class, 'update'])->name('user.update');
 
     // Routes for user addresses

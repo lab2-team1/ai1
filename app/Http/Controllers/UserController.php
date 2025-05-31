@@ -18,10 +18,12 @@ class UserController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
-        
-        $addresses = $user ? $user->addresses : new Collection();
 
-        return view('dashboards.userDashboard', compact('user', 'addresses'));
+        $addresses = $user ? $user->addresses : new Collection();
+        $transactionsKupione = $user ? $user->transactionsKupione()->with('listing', 'seller')->latest('transaction_date')->get() : collect();
+        $transactionsSprzedane = $user ? $user->transactionsSprzedane()->with('listing', 'buyer')->latest('transaction_date')->get() : collect();
+
+        return view('dashboards.userDashboard', compact('user', 'addresses', 'transactionsKupione', 'transactionsSprzedane'));
     }
 
     /**
@@ -50,10 +52,10 @@ class UserController extends Controller
     {
         $safeFields = ['first_name', 'last_name', 'email', 'phone']; // Define safe fields to log
         Log::info('Received update request', $request->only($safeFields));
-        
+
         $user = Auth::user();
         Log::info('Current user', ['user_id' => $user->id]);
-        
+
         try {
             DB::beginTransaction();
 
@@ -104,13 +106,13 @@ class UserController extends Controller
             }
 
             $updated = $user->update($validated);
-            
+
             if (!$updated) {
                 throw new \Exception('Failed to update user data.');
             }
 
             Log::info('Data updated successfully', ['user_id' => $user->id]);
-            
+
             DB::commit();
 
             return redirect()->route('user.dashboard')
@@ -134,5 +136,16 @@ class UserController extends Controller
                 ->withInput()
                 ->withErrors(['error' => 'An error occurred while updating data: ' . $e->getMessage()]);
         }
+    }
+
+    /**
+     * Show user transaction history.
+     */
+    public function transactions()
+    {
+        $user = Auth::user();
+        $transactionsBought = $user ? $user->transactionsKupione()->with('listing', 'seller')->latest('transaction_date')->get() : collect();
+        $transactionsSold = $user ? $user->transactionsSprzedane()->with('listing', 'buyer')->latest('transaction_date')->get() : collect();
+        return view('dashboards.transactions', compact('transactionsBought', 'transactionsSold'));
     }
 }

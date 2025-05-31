@@ -60,12 +60,18 @@ body {
 }
 
 .btn-primary {
+    padding: 0.75rem 1.5rem;
     background-color: #1b1b18;
     color: white;
-    padding: 0.5rem 1rem;
+    border: none;
     border-radius: 0.5rem;
-    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
     transition: background-color 0.2s;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
 }
 
 a.btn-primary{
@@ -74,6 +80,12 @@ a.btn-primary{
 
 .btn-primary:hover {
     background-color: black;
+}
+
+/* Add a class for full-width primary buttons if needed elsewhere */
+.btn-primary.btn-block {
+    width: 100%;
+    display: block;
 }
 
 /* Main content styles */
@@ -573,8 +585,7 @@ a.btn-primary{
 }
 
 .btn-primary {
-    width: 100%;
-    padding: 0.75rem;
+    padding: 0.75rem 1.5rem;
     background-color: #1b1b18;
     color: white;
     border: none;
@@ -583,6 +594,9 @@ a.btn-primary{
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.2s;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
 }
 
 .btn-primary:hover {
@@ -811,7 +825,6 @@ a.btn-primary{
 .admin-actions a,
 .admin-actions button {
     margin-left: 10px;
-    color: #1b1b18;
     text-decoration: none;
 }
 
@@ -834,6 +847,15 @@ a.btn-primary{
 
 .admin-actions button:hover {
     color: #900;
+}
+
+/* Style for the edit button within admin-actions */
+.admin-actions .edit-address-button {
+    color: #1b1b18;
+}
+
+.admin-actions .edit-address-button:hover {
+    color: #000;
 }
 
 .admin-table .empty-message {
@@ -978,9 +1000,9 @@ a.btn-primary{
 }
 
 .btn-primary {
+    padding: 0.75rem 1.5rem;
     background-color: #1b1b18;
     color: white;
-    padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 0.5rem;
     font-size: 1rem;
@@ -1067,8 +1089,7 @@ a.btn-primary{
 }
 
 .btn-primary {
-    width: 100%;
-    padding: 0.75rem;
+    padding: 0.75rem 1.5rem;
     background-color: #1b1b18;
     color: white;
     border: none;
@@ -1077,6 +1098,9 @@ a.btn-primary{
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.2s;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
 }
 
 .btn-primary:hover {
@@ -1106,4 +1130,62 @@ a.btn-primary{
 
 .btn-secondary:hover {
     color: black;
+}
+
+/* User Profile Form Styles */
+.user-profile-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.field-with-edit {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.field-with-edit input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #e3e3e0;
+    border-radius: 0.25rem;
+    background-color: #f8f8f8;
+    transition: all 0.3s ease;
+}
+
+.field-with-edit input:disabled {
+    background-color: #fff;
+    border-color: transparent;
+    cursor: default;
+}
+
+.edit-button {
+    background: none;
+    border: none;
+    color: #1b1b18;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.edit-button:hover {
+    color: #000;
+}
+
+.alert {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
 }

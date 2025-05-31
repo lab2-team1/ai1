@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AddressController as Admin_AddressController;
 use App\Http\Controllers\Admin\UserController as Admin_UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserAddressController;
 
 Route::resource('users', UserController::class)->only(['index', 'show']);
 
@@ -18,9 +19,19 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/user/dashboard', function () {
-        return view('dashboards.userDashboard');
-    })->name('user.dashboard');
+    Route::get('/user/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+    
+    Route::put('/user/update', [UserController::class, 'update'])->name('user.update');
+
+    // Routes for user addresses
+    Route::resource('user/addresses', UserAddressController::class)->except(['show'])->names([
+        'index' => 'user.addresses.index',
+        'create' => 'user.addresses.create',
+        'store' => 'user.addresses.store',
+        'edit' => 'user.addresses.edit',
+        'update' => 'user.addresses.update',
+        'destroy' => 'user.addresses.destroy',
+    ]);
 });
 
 Route::controller(AuthController::class)->group(function () {

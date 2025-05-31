@@ -8,9 +8,9 @@
         @include('shared.userSidebar')
         <section class="user-content">
             <h1>User Panel</h1>
-            @if(session('success'))
+            @if(session('profile_success'))
                 <div class="alert alert-success">
-                    {{ session('success') }}
+                    {{ session('profile_success') }}
                 </div>
             @endif
             <form action="{{ route('user.update') }}" method="POST" class="user-profile-form" id="userProfileForm">

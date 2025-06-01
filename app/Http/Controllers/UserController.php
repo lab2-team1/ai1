@@ -140,29 +140,7 @@ class UserController extends Controller
                 ->withErrors(['error' => 'An error occurred while updating data: ' . $e->getMessage()]);
         }
     }
-
-    /**
-     * Generowanie sekretu OTP dla 2FA.
-     */
-    public function generateOtpSecret(Request $request)
-    {
-        $user = Auth::user();
-
-        // Jeśli użytkownik już ma sekret, nie generuj nowego
-        if ($user->otp_secret) {
-            return redirect()->route('user.dashboard')
-                ->with('success', 'Dwuskładnikowe uwierzytelnianie jest już aktywne.');
-        }
-
-        // Generuj nowy sekret OTP
-        $otp = TOTP::generate();
-        $user->otp_secret = $otp->getSecret();
-        $user->save();
-
-        return redirect()->route('user.dashboard')
-            ->with('success', 'Sekret 2FA został wygenerowany. Zeskanuj kod QR poniżej.');
-    }
-
+ 
     public function show2faSetup()
     {
         $user = Auth::user();

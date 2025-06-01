@@ -47,7 +47,7 @@
             @elseif(Auth::check() && !Auth::user()->two_factor_enabled)
                 <div class="mb-3">
                     <p>Scan this QR code with your authenticator app or enter the secret manually:</p>
-                    <img src="{{ $qrCodeUrl }}" alt="QR Code">
+                    <img src="{{ $qrCodeUrl }}" alt="2FA setup QR code">
                     <p>Secret: <code>{{ $secretKey }}</code></p>
                 </div>
                 <form action="{{ route('user.2fa.enable') }}" method="POST">

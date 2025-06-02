@@ -28,6 +28,7 @@
                                     <td>{{ $listing->category ? $listing->category->name : '-' }}</td>
                                     <td>{{ $listing->formatted_price }}</td>
                                     <td class="admin-actions">
+                                        <a href="{{ route('listings.show', $listing->id) }}" title="View"><i class="fa fa-eye"></i></a>
                                         <a href="{{ route('user.listings.edit', $listing->id) }}" title="Edit"><i class="fa fa-edit"></i></a>
                                         <form action="{{ route('user.listings.destroy', $listing->id) }}" method="POST" style="display: inline;">
                                             @csrf

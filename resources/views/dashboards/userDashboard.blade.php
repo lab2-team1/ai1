@@ -8,11 +8,13 @@
         @include('shared.userSidebar')
         <section class="user-content">
             <h1>User Panel</h1>
+
             @if(session('profile_success'))
                 <div class="alert alert-success">
                     {{ session('profile_success') }}
                 </div>
             @endif
+
             <form action="{{ route('user.update') }}" method="POST" class="user-profile-form" id="userProfileForm">
                 @csrf
                 @method('PUT')
@@ -115,7 +117,6 @@
                     </tbody>
                 </table>
             @endif
-
             <button type="button" class="btn btn-primary mt-3" id="addAddressButton">Add New Address</button>
 
             <div id="addAddressFormContainer" style="display: none;" class="mt-4">
@@ -181,7 +182,6 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-
                     <div class="mb-3">
                         <label for="edit_zip_code" class="form-label">Zip Code</label>
                         <input type="text" class="form-control @error('zip_code') is-invalid @enderror" id="edit_zip_code" name="zip_code" value="{{ old('zip_code') }}" required>

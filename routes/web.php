@@ -40,6 +40,16 @@ Route::middleware(['auth'])->group(function () {
         'update' => 'user.addresses.update',
         'destroy' => 'user.addresses.destroy',
     ]);
+
+    // Zarządzanie ogłoszeniami użytkownika
+    Route::resource('user/listings', ListingController::class)->except(['show'])->names([
+        'index' => 'user.listings.index',
+        'create' => 'user.listings.create',
+        'store' => 'user.listings.store',
+        'edit' => 'user.listings.edit',
+        'update' => 'user.listings.update',
+        'destroy' => 'user.listings.destroy',
+    ]);
 });
 
 Route::controller(AuthController::class)->group(function () {

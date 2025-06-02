@@ -1,50 +1,51 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    @include('shared.head', ['pageTitle' => 'Dodaj ogłoszenie'])
+    @include('shared.head', ['pageTitle' => 'Edycja ogłoszenia'])
     <body>
         @include('shared.navigation')
 
         <div class="admin-panel">
             @include('shared.adminSidebar')
             <section class="admin-content">
-                <h1>Dodaj nowe ogłoszenie</h1>
+                <h1>Edit listing</h1>
 
                 @if(session('success'))
                     <div style="color: green;">{{ session('success') }}</div>
                 @endif
 
-                <form method="POST" action="{{ route('user.listings.store') }}" class="edit-form">
+                <form method="POST" action="{{ route('user.listings.update', $listing->id) }}" class="edit-form">
                     @csrf
+                    @method('PUT')
 
                     <div class="form-group">
-                        <label for="title">Tytuł:</label>
-                        <input type="text" id="title" name="title" value="{{ old('title') }}">
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" name="title" value="{{ old('title', $listing->title) }}">
                         @error('title')
                             <div style="color: red;">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="form-group">
-                        <label for="description">Opis:</label>
-                        <textarea id="description" name="description">{{ old('description') }}</textarea>
+                        <label for="description">Description:</label>
+                        <textarea id="description" name="description">{{ old('description', $listing->description) }}</textarea>
                         @error('description')
                             <div style="color: red;">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="form-group">
-                        <label for="price">Cena:</label>
-                        <input type="number" id="price" name="price" value="{{ old('price') }}" step="0.01" min="0">
+                        <label for="price">Price:</label>
+                        <input type="number" id="price" name="price" value="{{ old('price', $listing->price) }}" step="0.01" min="0">
                         @error('price')
                             <div style="color: red;">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="form-group">
-                        <label for="category_id">Kategoria:</label>
+                        <label for="category_id">Category:</label>
                         <select id="category_id" name="category_id">
                             @foreach($categories as $category)
-                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                <option value="{{ $category->id }}" {{ old('category_id', $listing->category_id) == $category->id ? 'selected' : '' }}>
                                     {{ $category->name }}
                                 </option>
                             @endforeach
@@ -54,7 +55,7 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="submit-button">Dodaj ogłoszenie</button>
+                    <button type="submit" class="submit-button">Save changes</button>
                 </form>
             </section>
         </div>

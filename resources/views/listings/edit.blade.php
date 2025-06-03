@@ -13,7 +13,7 @@
                     <div style="color: green;">{{ session('success') }}</div>
                 @endif
 
-                <form method="POST" action="{{ route('admin.listings.update', $listing->id) }}" class="edit-form">
+                <form method="POST" action="{{ route('user.listings.update', $listing->id) }}" class="edit-form">
                     @csrf
                     @method('PUT')
 
@@ -42,15 +42,15 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="status">Status:</label>
-                        <select id="status" name="status">
-                            @foreach(\App\Models\Listing::$statuses as $status)
-                                <option value="{{ $status }}" {{ old('status', $listing->status) == $status ? 'selected' : '' }}>
-                                    {{ ucfirst($status) }}
+                        <label for="category_id">Kategoria:</label>
+                        <select id="category_id" name="category_id">
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ old('category_id', $listing->category_id) == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('status')
+                        @error('category_id')
                             <div style="color: red;">{{ $message }}</div>
                         @enderror
                     </div>

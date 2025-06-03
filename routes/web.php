@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\UserController as Admin_UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserAddressController;
+use App\Http\Controllers\UserRatingController;
 
 Route::resource('users', UserController::class)->only(['index', 'show']);
 
@@ -41,6 +42,8 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/auth/logout', 'logout')->name('logout');
     Route::get('/auth/register', 'register')->name('register');
     Route::post('/auth/register', 'store')->name('register.store');
+    Route::get('/userRatings/create/{transaction_id}', [UserRatingController::class, 'create'])->name('userRatings.create');
+    Route::post('/userRatings', [UserRatingController::class, 'store'])->name('userRatings.store');
 });
 
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -63,4 +66,3 @@ Route::post('/listings/{listing}/buy', [TransactionController::class, 'store'])-
 Route::get('/payment/choose/{transaction}', [TransactionController::class, 'choosePayment'])->middleware('auth')->name('payment.choose');
 Route::post('/payment/choose/{transaction}', [TransactionController::class, 'processPayment'])->middleware('auth')->name('payment.process');
 Route::get('/payment/confirmation/{transaction}', [TransactionController::class, 'confirmation'])->middleware('auth')->name('payment.confirmation');
-

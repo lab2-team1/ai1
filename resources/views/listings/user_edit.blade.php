@@ -13,7 +13,7 @@
                     <div style="color: green;">{{ session('success') }}</div>
                 @endif
 
-                <form method="POST" action="{{ route('user.listings.update', $listing->id) }}" class="edit-form">
+                <form method="POST" action="{{ route('user.listings.update', $listing->id) }}" class="edit-form" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -51,6 +51,36 @@
                             @endforeach
                         </select>
                         @error('category_id')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label>Current Images:</label>
+                        <div class="current-images">
+                            @if($listing->images && count($listing->images) > 0)
+                                @foreach($listing->images as $image)
+                                    <div class="image-container">
+                                        <img src="{{ asset('storage/' . $image->path) }}" alt="Listing image" style="max-width: 200px; margin: 5px;">
+                                        <div class="image-actions">
+                                            <button type="button" class="delete-image" data-image-id="{{ $image->id }}">Delete</button>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <p>No images uploaded yet.</p>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="images">Add New Images:</label>
+                        <input type="file" id="images" name="images[]" multiple accept="image/*">
+                        <small class="form-text text-muted">You can select multiple images. Supported formats: JPG, PNG, GIF</small>
+                        @error('images')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
+                        @error('images.*')
                             <div style="color: red;">{{ $message }}</div>
                         @enderror
                     </div>

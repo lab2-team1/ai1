@@ -20,6 +20,7 @@
                             <li><strong>Kategoria:</strong> {{ $listing->category ? $listing->category->name : '-' }}</li>
                             <li><strong>Właściciel:</strong> {{ $listing->user ? $listing->user->first_name . ' ' . $listing->user->last_name : '-' }}</li>
                             <li><strong>Data dodania:</strong> {{ $listing->created_at->format('d.m.Y H:i') }}</li>
+                            <li><strong>Wyświetlenia:</strong> {{ $listing->visits }}</li>
                         </ul>
                     </div>
 

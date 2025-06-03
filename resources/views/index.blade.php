@@ -78,6 +78,7 @@
                                     <div class="listing-footer">
                                         <span class="listing-price">{{ number_format($listing->price, 2) }} zł</span>
                                         <span class="listing-date" datetime="{{ $listing->created_at->toIso8601String() }}">{{ $listing->created_at->diffForHumans() }}</span>
+                                        <span class="listing-visits"><i class="fas fa-eye"></i> {{ $listing->visits }}</span>
                                     </div>
                                 </div>
                             </div>

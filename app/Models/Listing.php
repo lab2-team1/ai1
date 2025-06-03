@@ -12,7 +12,8 @@ class Listing extends Model
         'title',
         'description',
         'price',
-        'status'
+        'status',
+        'visits'
     ];
 
     protected $attributes = [
@@ -120,6 +121,11 @@ class Listing extends Model
         if ($this->status === self::STATUS_EXPIRED) {
             $this->update(['status' => self::STATUS_ACTIVE]);
         }
+    }
+
+    public function incrementVisits()
+    {
+        $this->increment('visits');
     }
 
 }

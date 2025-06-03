@@ -32,6 +32,6 @@ class UserRatingController extends Controller
             'comment' => $validated['comment'],
         ]);
 
-        return redirect()->route('user.dashboard')->with('success', 'Ocena została dodana!');
+        return redirect()->route('user.transactions')->with('success', 'Ocena została dodana!');
     }
 }

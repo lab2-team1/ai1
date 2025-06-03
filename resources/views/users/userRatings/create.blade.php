@@ -34,6 +34,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Wyślij ocenę</button>
+                <button type="button" class="btn btn-secondary" onclick="window.history.back();">Wróć</button>
             </form>
         </section>
     </div>

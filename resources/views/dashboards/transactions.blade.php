@@ -48,9 +48,13 @@
                                 </td>
                                 <td>{{ ucfirst($transaction->payment_status) }}
                                     @if ($transaction->payment_status === 'pending')
-                                        <form method="POST" action="{{ route('transactions.confirm', $transaction->id) }}" style="display:inline;">
+                                        <form method="POST"
+                                            action="{{ route('transactions.confirm', $transaction->id) }}"
+                                            style="display:inline;">
                                             @csrf
-                                            <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 8px; padding: 2px 10px; font-size: 0.85em;">Confirm receipt</button>
+                                            <button type="submit" class="btn btn-primary btn-sm"
+                                                style="margin-left: 8px; padding: 2px 10px; font-size: 0.85em;">Confirm
+                                                receipt</button>
                                         </form>
                                     @endif
                                 </td>
@@ -114,10 +118,23 @@
                                 <td>{{ ucfirst($transaction->payment_status) }}</td>
                                 <td>
                                     @if (in_array($transaction->payment_status, ['confirmed', 'canceled']))
-                                        <a href="{{ route('userRatings.create', ['transaction_id' => $transaction->id]) }}"
-                                            title="Wystaw ocenę" style="color: #f5b301; font-size: 1.3em;">
-                                            &#9733;
-                                        </a>
+                                        @php
+                                            $alreadyRated = \App\Models\UserRating::where(
+                                                'transaction_id',
+                                                $transaction->id,
+                                            )
+                                                ->where('rated_by_user_id', auth()->id())
+                                                ->exists();
+                                        @endphp
+                                        @if ($alreadyRated)
+                                            <span title="Ocena już wystawiona"
+                                                style="color: #aaa; font-size: 1.3em;">&#9733;</span>
+                                        @else
+                                            <a href="{{ route('userRatings.create', ['transaction_id' => $transaction->id]) }}"
+                                                title="Wystaw ocenę" style="color: #f5b301; font-size: 1.3em;">
+                                                &#9733;
+                                            </a>
+                                        @endif
                                     @endif
                                 </td>
                             </tr>

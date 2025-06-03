@@ -66,3 +66,4 @@ Route::post('/listings/{listing}/buy', [TransactionController::class, 'store'])-
 Route::get('/payment/choose/{transaction}', [TransactionController::class, 'choosePayment'])->middleware('auth')->name('payment.choose');
 Route::post('/payment/choose/{transaction}', [TransactionController::class, 'processPayment'])->middleware('auth')->name('payment.process');
 Route::get('/payment/confirmation/{transaction}', [TransactionController::class, 'confirmation'])->middleware('auth')->name('payment.confirmation');
+Route::post('/transactions/{transaction}/confirm', [TransactionController::class, 'confirm'])->middleware('auth')->name('transactions.confirm');

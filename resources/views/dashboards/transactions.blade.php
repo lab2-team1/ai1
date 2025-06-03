@@ -8,6 +8,12 @@
     <div class="user-panel">
         @include('shared.userSidebar')
         <section class="user-content">
+            @if (session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
             <h1>Transaction History</h1>
             <h2>Bought</h2>
             @if ($transactionsBought->isEmpty())
@@ -40,7 +46,14 @@
                                 <td>{{ number_format($transaction->amount, 2) }} PLN</td>
                                 <td>{{ $transaction->transaction_date ? \Carbon\Carbon::parse($transaction->transaction_date)->format('d.m.Y H:i') : '-' }}
                                 </td>
-                                <td>{{ ucfirst($transaction->payment_status) }}</td>
+                                <td>{{ ucfirst($transaction->payment_status) }}
+                                    @if ($transaction->payment_status === 'pending')
+                                        <form method="POST" action="{{ route('transactions.confirm', $transaction->id) }}" style="display:inline;">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 8px; padding: 2px 10px; font-size: 0.85em;">Confirm receipt</button>
+                                        </form>
+                                    @endif
+                                </td>
                                 <td>
                                     @if (in_array($transaction->payment_status, ['confirmed', 'canceled']))
                                         @php

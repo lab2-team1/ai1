@@ -1,7 +1,6 @@
 class ImageManager {
     constructor() {
         this.initializeSortable();
-        this.initializePrimaryImageButtons();
         this.initializeDeleteButtons();
     }
 
@@ -20,11 +19,16 @@ class ImageManager {
             .map(container => container.dataset.imageId);
 
         const isAdmin = window.location.pathname.includes('/admin/');
+        // Extract the listing ID from the URL path
+        const pathParts = window.location.pathname.split('/');
+        const listingId = pathParts[pathParts.length - 1]; // Get the last part of the URL
+
         const reorderUrl = isAdmin
             ? `/admin/listings/${listingId}/reorder-images`
             : `/user/listings/${listingId}/reorder-images`;
 
         try {
+            console.log('Sending reorder request:', { image_ids: imageIds, url: reorderUrl });
             const response = await fetch(reorderUrl, {
                 method: 'POST',
                 headers: {
@@ -34,48 +38,23 @@ class ImageManager {
                 body: JSON.stringify({ image_ids: imageIds })
             });
 
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
             const data = await response.json();
+            console.log('Reorder response:', data);
+
             if (data.message) {
                 this.showNotification('Images reordered successfully', 'success');
+                // Force a page reload to ensure the new order is displayed
+                window.location.reload();
+            } else if (data.error) {
+                this.showNotification(data.error, 'error');
             }
         } catch (error) {
             console.error('Error:', error);
             this.showNotification('Error reordering images', 'error');
-        }
-    }
-
-    initializePrimaryImageButtons() {
-        document.querySelectorAll('.set-primary-image').forEach(button => {
-            button.addEventListener('click', () => this.handlePrimaryImage(button));
-        });
-    }
-
-    async handlePrimaryImage(button) {
-        const imageId = button.dataset.imageId;
-        const url = button.dataset.url;
-
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                }
-            });
-
-            const data = await response.json();
-            if (data.message) {
-                document.querySelectorAll('.set-primary-image').forEach(btn => {
-                    btn.classList.remove('active');
-                    btn.textContent = 'Set as Primary';
-                });
-                button.classList.add('active');
-                button.textContent = 'Primary';
-                this.showNotification('Primary image updated successfully', 'success');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            this.showNotification('Error updating primary image', 'error');
         }
     }
 

@@ -63,11 +63,6 @@
                                     <div class="image-container" data-image-id="{{ $image->id }}">
                                         <img src="{{ asset('storage/' . $image->image_url) }}" alt="Listing image" style="max-width: 200px; margin: 5px;">
                                         <div class="image-actions">
-                                            <button type="button" class="set-primary-image {{ $image->is_primary ? 'active' : '' }}"
-                                                    data-image-id="{{ $image->id }}"
-                                                    data-url="{{ route('user.listings.set-primary-image', $image->id) }}">
-                                                {{ $image->is_primary ? 'Primary' : 'Set as Primary' }}
-                                            </button>
                                             <button type="button" class="delete-image"
                                                     data-image-id="{{ $image->id }}"
                                                     data-delete-url="{{ route('user.listings.delete-image', $image->id) }}">
@@ -100,6 +95,5 @@
         </div>
 
         @include('shared.footer')
-        <script src="{{ asset('js/image-delete.js') }}"></script>
     </body>
 </html>

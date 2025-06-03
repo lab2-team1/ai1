@@ -61,9 +61,9 @@
                             @if($listing->images && count($listing->images) > 0)
                                 @foreach($listing->images as $image)
                                     <div class="image-container">
-                                        <img src="{{ asset('storage/' . $image->path) }}" alt="Listing image" style="max-width: 200px; margin: 5px;">
+                                        <img src="{{ asset('storage/' . $image->image_url) }}" alt="Listing image" style="max-width: 200px; margin: 5px;">
                                         <div class="image-actions">
-                                            <button type="button" class="delete-image" data-image-id="{{ $image->id }}">Delete</button>
+                                            <button type="button" class="delete-image" data-image-id="{{ $image->id }}" data-delete-url="{{ route('user.listings.delete-image', $image->id) }}">Delete</button>
                                         </div>
                                     </div>
                                 @endforeach
@@ -85,11 +85,12 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="submit-button">Save changes</button>
+                    <button type="submit" class="submit-button">Save Changes</button>
                 </form>
             </section>
         </div>
 
         @include('shared.footer')
+        <script src="{{ asset('js/image-delete.js') }}"></script>
     </body>
 </html>

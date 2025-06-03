@@ -39,6 +39,11 @@ class Listing extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(ListingImage::class);
+    }
+
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
@@ -122,4 +127,18 @@ class Listing extends Model
         }
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($listing) {
+            // Delete all associated images from storage and database
+            foreach ($listing->images as $image) {
+                if (file_exists(public_path('storage/' . $image->image_url))) {
+                    unlink(public_path('storage/' . $image->image_url));
+                }
+                $image->delete();
+            }
+        });
+    }
 }

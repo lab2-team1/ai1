@@ -50,6 +50,9 @@ Route::middleware(['auth'])->group(function () {
         'update' => 'user.listings.update',
         'destroy' => 'user.listings.destroy',
     ]);
+
+    // Add route for user image deletion
+    Route::delete('/user/listings/image/{image}', [ListingController::class, 'deleteImage'])->name('user.listings.delete-image');
 });
 
 Route::controller(AuthController::class)->group(function () {
@@ -63,6 +66,10 @@ Route::controller(AuthController::class)->group(function () {
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->name('listings.edit');
     Route::put('/listings/{listing}', [ListingController::class, 'update'])->name('listings.update');
+
+    // Add route for admin image deletion
+    Route::delete('/listings/image/{image}', [ListingController::class, 'deleteImage'])->name('listings.delete-image');
+
     Route::get('/dashboard', function () {
         return view('dashboards.admindashboard');
     })->name('dashboard');

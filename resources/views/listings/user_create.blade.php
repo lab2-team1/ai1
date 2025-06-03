@@ -66,11 +66,12 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="submit-button">Add listing</button>
+                    <button type="submit" class="submit-button">Add Listing</button>
                 </form>
             </section>
         </div>
 
         @include('shared.footer')
+        <script src="{{ asset('js/image-delete.js') }}"></script>
     </body>
 </html>

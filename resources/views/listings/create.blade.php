@@ -13,7 +13,7 @@
                     <div style="color: green;">{{ session('success') }}</div>
                 @endif
 
-                <form method="POST" action="{{ route('user.listings.store') }}" class="edit-form" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.listings.store') }}" class="edit-form" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group">
@@ -55,6 +55,34 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="user_id">User:</label>
+                        <select id="user_id" name="user_id">
+                            @foreach(\App\Models\User::all() as $user)
+                                <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                    {{ $user->first_name }} {{ $user->last_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('user_id')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Status:</label>
+                        <select id="status" name="status">
+                            @foreach(\App\Models\Listing::$statuses as $status)
+                                <option value="{{ $status }}" {{ old('status') == $status ? 'selected' : '' }}>
+                                    {{ ucfirst($status) }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('status')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
                         <label for="images">Images:</label>
                         <input type="file" id="images" name="images[]" multiple accept="image/*">
                         <small class="form-text text-muted">You can select multiple images. Supported formats: JPG, PNG, GIF</small>
@@ -72,5 +100,6 @@
         </div>
 
         @include('shared.footer')
+        <script src="{{ asset('js/image-delete.js') }}"></script>
     </body>
 </html>

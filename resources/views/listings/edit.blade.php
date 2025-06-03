@@ -13,7 +13,7 @@
                     <div style="color: green;">{{ session('success') }}</div>
                 @endif
 
-                <form method="POST" action="{{ route('user.listings.update', $listing->id) }}" class="edit-form" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.listings.update', $listing->id) }}" class="edit-form" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -56,14 +56,28 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="status">Status:</label>
+                        <select id="status" name="status">
+                            @foreach(\App\Models\Listing::$statuses as $status)
+                                <option value="{{ $status }}" {{ old('status', $listing->status) == $status ? 'selected' : '' }}>
+                                    {{ ucfirst($status) }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('status')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
                         <label>Current Images:</label>
                         <div class="current-images">
                             @if($listing->images && count($listing->images) > 0)
                                 @foreach($listing->images as $image)
                                     <div class="image-container">
-                                        <img src="{{ asset('storage/' . $image->path) }}" alt="Listing image" style="max-width: 200px; margin: 5px;">
+                                        <img src="{{ asset('storage/' . $image->image_url) }}" alt="Listing image" style="max-width: 200px; margin: 5px;">
                                         <div class="image-actions">
-                                            <button type="button" class="delete-image" data-image-id="{{ $image->id }}">Delete</button>
+                                            <button type="button" class="delete-image" data-image-id="{{ $image->id }}" data-delete-url="{{ route('admin.listings.delete-image', $image->id) }}">Delete</button>
                                         </div>
                                     </div>
                                 @endforeach
@@ -91,5 +105,6 @@
         </div>
 
         @include('shared.footer')
+        <script src="{{ asset('js/image-delete.js') }}"></script>
     </body>
 </html>

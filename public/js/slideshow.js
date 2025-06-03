@@ -6,6 +6,7 @@ class Slideshow {
         this.currentSlide = 0;
         this.interval = null;
         this.intervalTime = 4000; // 4 seconds
+        this.imagesLoaded = false;
 
         if (this.slides.length > 1) {
             this.init();
@@ -13,21 +14,49 @@ class Slideshow {
     }
 
     init() {
-        this.startSlideshow();
-        this.addEventListeners();
+        this.preloadImages().then(() => {
+            this.imagesLoaded = true;
+            this.startSlideshow();
+            this.addEventListeners();
+        });
+    }
+
+    preloadImages() {
+        const promises = Array.from(this.slides).map(slide => {
+            return new Promise((resolve) => {
+                const img = slide.querySelector('img');
+                if (img) {
+                    if (img.complete) {
+                        resolve();
+                    } else {
+                        img.onload = () => resolve();
+                        img.onerror = () => resolve(); // Resolve even on error to not block the slideshow
+                    }
+                } else {
+                    resolve();
+                }
+            });
+        });
+        return Promise.all(promises);
     }
 
     showSlide(index) {
+        if (!this.imagesLoaded) return;
+
         // Remove active class from current slide and thumbnail
         this.slides[this.currentSlide].classList.remove('active');
-        this.thumbnails[this.currentSlide].classList.remove('active');
+        if (this.thumbnails[this.currentSlide]) {
+            this.thumbnails[this.currentSlide].classList.remove('active');
+        }
 
         // Update current slide index
         this.currentSlide = index;
 
         // Add active class to new current slide and thumbnail
         this.slides[this.currentSlide].classList.add('active');
-        this.thumbnails[this.currentSlide].classList.add('active');
+        if (this.thumbnails[this.currentSlide]) {
+            this.thumbnails[this.currentSlide].classList.add('active');
+        }
     }
 
     showNextSlide() {
@@ -36,19 +65,24 @@ class Slideshow {
     }
 
     startSlideshow() {
+        if (this.interval) {
+            clearInterval(this.interval);
+        }
         this.interval = setInterval(() => this.showNextSlide(), this.intervalTime);
         this.slideshow.dataset.interval = this.interval;
     }
 
     pauseSlideshow() {
-        if (this.slideshow.dataset.interval) {
-            clearInterval(parseInt(this.slideshow.dataset.interval));
+        if (this.interval) {
+            clearInterval(this.interval);
+            this.interval = null;
         }
     }
 
     resumeSlideshow() {
-        this.interval = setInterval(() => this.showNextSlide(), this.intervalTime);
-        this.slideshow.dataset.interval = this.interval;
+        if (!this.interval) {
+            this.startSlideshow();
+        }
     }
 
     addEventListeners() {
@@ -57,13 +91,15 @@ class Slideshow {
         this.slideshow.addEventListener('mouseleave', () => this.resumeSlideshow());
 
         // Thumbnail click events
-        this.thumbnails.forEach((thumbnail, index) => {
-            thumbnail.addEventListener('click', () => {
-                this.pauseSlideshow();
-                this.showSlide(index);
-                this.resumeSlideshow();
+        if (this.thumbnails) {
+            this.thumbnails.forEach((thumbnail, index) => {
+                thumbnail.addEventListener('click', () => {
+                    this.pauseSlideshow();
+                    this.showSlide(index);
+                    this.resumeSlideshow();
+                });
             });
-        });
+        }
     }
 }
 

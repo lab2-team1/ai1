@@ -61,13 +61,11 @@ class ListingController extends Controller
             $listing = \App\Models\Listing::create($validated);
 
             if ($request->hasFile('images')) {
-                $order = 0;
                 foreach ($request->file('images') as $image) {
                     $path = $image->store('listings/' . $listing->id, 'public');
                     \App\Models\ListingImage::create([
                         'listing_id' => $listing->id,
-                        'image_url' => $path,
-                        'order' => $order++
+                        'image_url' => $path
                     ]);
                 }
             }
@@ -89,14 +87,12 @@ class ListingController extends Controller
 
         if ($request->hasFile('images')) {
             Log::info('Processing admin image uploads', ['count' => count($request->file('images'))]);
-            $order = 0;
             foreach ($request->file('images') as $image) {
                 $path = $image->store('listings/' . $listing->id, 'public');
                 Log::info('Image stored', ['path' => $path]);
                 ListingImage::create([
                     'listing_id' => $listing->id,
-                    'image_url' => $path,
-                    'order' => $order++
+                    'image_url' => $path
                 ]);
             }
         } else {
@@ -149,15 +145,11 @@ class ListingController extends Controller
             $listing->update($validated);
 
             if ($request->hasFile('images')) {
-                // Get the current highest order value
-                $maxOrder = $listing->images()->max('order') ?? -1;
-
                 foreach ($request->file('images') as $image) {
                     $path = $image->store('listings/' . $listing->id, 'public');
                     ListingImage::create([
                         'listing_id' => $listing->id,
-                        'image_url' => $path,
-                        'order' => ++$maxOrder
+                        'image_url' => $path
                     ]);
                 }
             }
@@ -189,17 +181,13 @@ class ListingController extends Controller
                     'listing_id' => $listing->id
                 ]);
 
-                // Get the current highest order value
-                $maxOrder = $listing->images()->max('order') ?? -1;
-
                 foreach ($request->file('images') as $image) {
                     $path = $image->store('listings/' . $listing->id, 'public');
                     Log::info('Image stored', ['path' => $path]);
 
                     $imageModel = ListingImage::create([
                         'listing_id' => $listing->id,
-                        'image_url' => $path,
-                        'order' => ++$maxOrder
+                        'image_url' => $path
                     ]);
                     Log::info('Image record created', ['image_id' => $imageModel->id]);
                 }

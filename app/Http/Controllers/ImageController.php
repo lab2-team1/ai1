@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class ImageController extends Controller
 {
@@ -97,16 +95,7 @@ class ImageController extends Controller
      */
     public function reorder(Request $request, Listing $listing)
     {
-        \Log::info('Starting image reorder', [
-            'listing_id' => $listing->id,
-            'request_data' => $request->all()
-        ]);
-
         if ($listing->user_id !== Auth::id()) {
-            \Log::warning('Unauthorized reorder attempt', [
-                'listing_id' => $listing->id,
-                'user_id' => Auth::id()
-            ]);
             return response()->json(['error' => 'Unauthorized'], 403);
         }
 
@@ -116,40 +105,15 @@ class ImageController extends Controller
         ]);
 
         if ($validator->fails()) {
-            \Log::error('Validation failed', [
-                'errors' => $validator->errors()->toArray()
-            ]);
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Start a database transaction
-        DB::beginTransaction();
-        try {
-            foreach ($request->image_ids as $order => $imageId) {
-                \Log::info('Updating image order', [
-                    'image_id' => $imageId,
-                    'order' => $order
-                ]);
-
-                $updated = ListingImage::where('id', $imageId)
-                    ->where('listing_id', $listing->id)
-                    ->update(['order' => $order]);
-
-                \Log::info('Update result', [
-                    'image_id' => $imageId,
-                    'updated' => $updated
-                ]);
-            }
-            DB::commit();
-            \Log::info('Reorder completed successfully');
-            return response()->json(['message' => 'Images reordered successfully']);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            \Log::error('Failed to reorder images', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-            return response()->json(['error' => 'Failed to reorder images: ' . $e->getMessage()], 500);
+        foreach ($request->image_ids as $order => $imageId) {
+            ListingImage::where('id', $imageId)
+                ->where('listing_id', $listing->id)
+                ->update(['order' => $order]);
         }
+
+        return response()->json(['message' => 'Images reordered successfully']);
     }
 }

@@ -19,16 +19,12 @@ class ImageManager {
             .map(container => container.dataset.imageId);
 
         const isAdmin = window.location.pathname.includes('/admin/');
-        // Extract the listing ID from the URL path
-        const pathParts = window.location.pathname.split('/');
-        const listingId = pathParts[pathParts.length - 1]; // Get the last part of the URL
-
+        const listingId = window.location.pathname.split('/').filter(Boolean).pop();
         const reorderUrl = isAdmin
             ? `/admin/listings/${listingId}/reorder-images`
             : `/user/listings/${listingId}/reorder-images`;
 
         try {
-            console.log('Sending reorder request:', { image_ids: imageIds, url: reorderUrl });
             const response = await fetch(reorderUrl, {
                 method: 'POST',
                 headers: {
@@ -38,19 +34,9 @@ class ImageManager {
                 body: JSON.stringify({ image_ids: imageIds })
             });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
             const data = await response.json();
-            console.log('Reorder response:', data);
-
             if (data.message) {
                 this.showNotification('Images reordered successfully', 'success');
-                // Force a page reload to ensure the new order is displayed
-                window.location.reload();
-            } else if (data.error) {
-                this.showNotification(data.error, 'error');
             }
         } catch (error) {
             console.error('Error:', error);
@@ -66,7 +52,6 @@ class ImageManager {
 
     async handleDelete(button) {
         if (confirm('Are you sure you want to delete this image?')) {
-            const imageId = button.dataset.imageId;
             const deleteUrl = button.dataset.deleteUrl;
 
             try {
@@ -80,8 +65,11 @@ class ImageManager {
 
                 const data = await response.json();
                 if (data.success) {
-                    button.closest('.image-container').remove();
-                    this.showNotification('Image deleted successfully', 'success');
+                    if (confirm('Image deleted successfully. Click OK to refresh the page.')) {
+                        window.location.reload();
+                    }
+                } else {
+                    this.showNotification('Error deleting image', 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);

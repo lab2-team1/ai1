@@ -95,5 +95,6 @@
         </div>
 
         @include('shared.footer')
+        <script src="{{ asset('js/image-management.js') }}"></script>
     </body>
 </html>

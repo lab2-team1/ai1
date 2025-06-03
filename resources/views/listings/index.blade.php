@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    @include('shared.head', ['pageTitle' => 'Lista ogłoszeń'])
+    @include('shared.head', ['pageTitle' => 'Listings'])
     <body>
         @include('shared.navigation')
 
         <div class="admin-panel">
             @include('shared.adminSidebar')
             <section class="admin-content">
-                <h1>Lista ogłoszeń</h1>
+                <h1>Listings</h1>
 
-                <a href="{{ route('user.listings.create') }}" class="btn-primary">Dodaj nowe ogłoszenie</a>
+                <a href="{{ route('user.listings.create') }}" class="btn-primary">Add New Listing</a>
 
                 <div class="admin-table-container">
                     <table class="admin-table">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Tytuł</th>
-                                <th>Kategoria</th>
-                                <th>Cena</th>
-                                <th>Akcje</th>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,17 +30,17 @@
                                     <td>{{ $listing->category ? $listing->category->name : '-' }}</td>
                                     <td>{{ $listing->formatted_price }}</td>
                                     <td class="admin-actions">
-                                        <a href="{{ route('user.listings.edit', $listing->id) }}">Edytuj</a>
+                                        <a href="{{ route('user.listings.edit', $listing->id) }}">Edit</a>
                                         <form action="{{ route('user.listings.destroy', $listing->id) }}" method="POST" style="display: inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Na pewno usunąć to ogłoszenie?')">Usuń</button>
+                                            <button type="submit" onclick="return confirm('Are you sure you want to delete this listing?')">Delete</button>
                                         </form>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="empty-message">Brak ogłoszeń</td>
+                                    <td colspan="5" class="empty-message">No listings found</td>
                                 </tr>
                             @endforelse
                         </tbody>

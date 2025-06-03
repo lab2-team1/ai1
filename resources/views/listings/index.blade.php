@@ -16,6 +16,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Image</th>
                                 <th>Title</th>
                                 <th>Category</th>
                                 <th>Price</th>
@@ -26,6 +27,13 @@
                             @forelse($listings as $listing)
                                 <tr>
                                     <td>{{ $listing->id }}</td>
+                                    <td>
+                                        @if($listing->images->isNotEmpty())
+                                            <img src="{{ asset('storage/' . $listing->images->first()->image_url) }}" alt="{{ $listing->title }}" style="width: 50px; height: 50px; object-fit: cover;">
+                                        @else
+                                            <div style="width: 50px; height: 50px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #666;">No image</div>
+                                        @endif
+                                    </td>
                                     <td>{{ $listing->title }}</td>
                                     <td>{{ $listing->category ? $listing->category->name : '-' }}</td>
                                     <td>{{ $listing->formatted_price }}</td>

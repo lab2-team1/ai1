@@ -78,4 +78,23 @@ class SearchController extends Controller
             'categories' => $categories
         ]);
     }
+
+    public function suggestions(Request $request)
+    {
+        $query = $request->get('query');
+
+        if (empty($query)) {
+            return response()->json([]);
+        }
+
+        $suggestions = Listing::where('title', 'like', "%{$query}%")
+            ->orWhere('description', 'like', "%{$query}%")
+            ->select('title')
+            ->distinct()
+            ->limit(5)
+            ->get()
+            ->pluck('title');
+
+        return response()->json($suggestions);
+    }
 }

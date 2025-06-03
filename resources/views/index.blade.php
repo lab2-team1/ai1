@@ -12,7 +12,8 @@
                 <div class="search-container">
                     <form action="{{ route('search') }}" method="GET" class="search-form">
                         <div class="search-input-group">
-                            <input type="text" name="query" class="search-input" placeholder="Search for anything..." value="{{ request('query') }}">
+                            <input type="text" name="query" class="search-input" placeholder="Search for anything..." value="{{ request('query') }}" id="search-input">
+                            <div id="search-suggestions" class="search-suggestions"></div>
                             <button type="submit" class="search-button">Search</button>
                         </div>
                     </form>
@@ -92,5 +93,6 @@
 
         <!-- footer -->
         @include('shared.footer')
+        <script src="{{ asset('js/search.js') }}"></script>
     </body>
 </html>

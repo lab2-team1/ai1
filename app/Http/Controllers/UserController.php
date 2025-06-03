@@ -158,11 +158,11 @@ class UserController extends Controller
         $transactionsSold = $user ? $user->transactionsSprzedane()->with('listing', 'buyer')->latest('transaction_date')->get() : collect();
         return view('dashboards.transactions', compact('transactionsBought', 'transactionsSold'));
 
- 
+    }
     public function show2faSetup()
     {
         $user = Auth::user();
-        
+
         if (!$user->otp_secret) {
             $otp = TOTP::create();
             $user->otp_secret = $otp->getSecret();

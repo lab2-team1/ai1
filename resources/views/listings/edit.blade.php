@@ -71,13 +71,22 @@
 
                     <div class="form-group">
                         <label>Current Images:</label>
-                        <div class="current-images">
+                        <div class="current-images" id="sortable-images">
                             @if($listing->images && count($listing->images) > 0)
-                                @foreach($listing->images as $image)
-                                    <div class="image-container">
+                                @foreach($listing->images->sortBy('order') as $image)
+                                    <div class="image-container" data-image-id="{{ $image->id }}">
                                         <img src="{{ asset('storage/' . $image->image_url) }}" alt="Listing image" style="max-width: 200px; margin: 5px;">
                                         <div class="image-actions">
-                                            <button type="button" class="delete-image" data-image-id="{{ $image->id }}" data-delete-url="{{ route('admin.listings.delete-image', $image->id) }}">Delete</button>
+                                            <button type="button" class="set-primary-image {{ $image->is_primary ? 'active' : '' }}"
+                                                    data-image-id="{{ $image->id }}"
+                                                    data-url="{{ route('admin.listings.set-primary-image', $image->id) }}">
+                                                {{ $image->is_primary ? 'Primary' : 'Set as Primary' }}
+                                            </button>
+                                            <button type="button" class="delete-image"
+                                                    data-image-id="{{ $image->id }}"
+                                                    data-delete-url="{{ route('admin.listings.delete-image', $image->id) }}">
+                                                Delete
+                                            </button>
                                         </div>
                                     </div>
                                 @endforeach

@@ -68,7 +68,52 @@ class ImageController extends Controller
      */
     public function index(Listing $listing)
     {
-        $images = $listing->images;
+        $images = $listing->images()->orderBy('order')->get();
         return response()->json(['images' => $images]);
+    }
+
+    /**
+     * Set an image as primary
+     */
+    public function setPrimary(ListingImage $image)
+    {
+        if ($image->listing->user_id !== Auth::id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        // Remove primary status from all other images
+        $image->listing->images()->update(['is_primary' => false]);
+
+        // Set this image as primary
+        $image->update(['is_primary' => true]);
+
+        return response()->json(['message' => 'Primary image updated successfully']);
+    }
+
+    /**
+     * Reorder images
+     */
+    public function reorder(Request $request, Listing $listing)
+    {
+        if ($listing->user_id !== Auth::id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'image_ids' => 'required|array',
+            'image_ids.*' => 'exists:listing_images,id'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        foreach ($request->image_ids as $order => $imageId) {
+            ListingImage::where('id', $imageId)
+                ->where('listing_id', $listing->id)
+                ->update(['order' => $order]);
+        }
+
+        return response()->json(['message' => 'Images reordered successfully']);
     }
 }

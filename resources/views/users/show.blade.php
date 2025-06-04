@@ -18,7 +18,6 @@
                 <ul style="list-style: none; padding: 0; margin-bottom: 2.5rem;">
                     <li><strong>Imię:</strong> {{ $user->first_name }}</li>
                     <li><strong>Nazwisko:</strong> {{ $user->last_name }}</li>
-                    <li><strong>Email:</strong> {{ $user->email }}</li>
                     <li><strong>Telefon:</strong> {{ $user->phone }}</li>
                     <li><strong>Data rejestracji:</strong> {{ $user->created_at->format('Y-m-d') }}</li>
                 </ul>
@@ -26,18 +25,18 @@
                 {{-- Zakładki --}}
                 <div style="margin-top: 2rem;">
                     <ul class="nav nav-tabs"
-                        style="display: flex; border-bottom: 2px solid #e0e0e0; gap: 2rem; justify-content: flex-start;">
-                        <li class="nav-item" style="flex: 1;">
+                        style="display: flex; border-bottom: none; gap: 0; justify-content: flex-start; margin-bottom: 0;">
+                        <li class="nav-item" style="flex: 1; list-style: none;">
                             <a class="nav-link active" id="listings-tab" href="#"
                                 onclick="showTab('listings'); return false;"
-                                style="display: block; text-align: center; font-size: 1.25rem; font-weight: 600; padding: 1rem 0; border: none; border-radius: 1rem 1rem 0 0; background: #f7f7fa; color: #333; transition: background 0.2s, color 0.2s;">
+                                style="display: block; text-align: center; font-size: 1.25rem; font-weight: 600; padding: 1rem 0 0.7rem 0; border: none; border-radius: 1rem 1rem 0 0; background: #f7f7fa; color: #333; transition: background 0.2s, color 0.2s; position: relative;">
                                 Ogłoszenia
                             </a>
                         </li>
-                        <li class="nav-item" style="flex: 1;">
+                        <li class="nav-item" style="flex: 1; list-style: none;">
                             <a class="nav-link" id="ratings-tab" href="#"
                                 onclick="showTab('ratings'); return false;"
-                                style="display: block; text-align: center; font-size: 1.25rem; font-weight: 600; padding: 1rem 0; border: none; border-radius: 1rem 1rem 0 0; background: #f7f7fa; color: #333; transition: background 0.2s, color 0.2s;">
+                                style="display: block; text-align: center; font-size: 1.25rem; font-weight: 600; padding: 1rem 0 0.7rem 0; border: none; border-radius: 1rem 1rem 0 0; background: #f7f7fa; color: #333; transition: background 0.2s, color 0.2s; position: relative;">
                                 Oceny
                             </a>
                         </li>
@@ -154,15 +153,27 @@
     @include('shared.footer')
 
     <style>
-        .nav-link.active {
-            background: #fff !important;
-            color: #007bff !important;
-            border-bottom: 2px solid #007bff !important;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-        }
-
         .nav-link {
             cursor: pointer;
+            border-bottom: 4px solid transparent !important;
+            box-shadow: none !important;
+        }
+
+        .nav-link.active#listings-tab {
+            border-bottom: 4px solid #007bff !important;
+            color: #007bff !important;
+            background: #fff !important;
+        }
+
+        .nav-link.active#ratings-tab {
+            border-bottom: 4px solid #f5b301 !important;
+            /* złoty jak gwiazdka */
+            color: #f5b301 !important;
+            background: #fff !important;
+        }
+
+        .nav-tabs {
+            border-bottom: none !important;
         }
     </style>
     <script>

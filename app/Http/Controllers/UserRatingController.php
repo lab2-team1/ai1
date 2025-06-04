@@ -12,7 +12,7 @@ class UserRatingController extends Controller
     public function create($transaction_id)
     {
         $transaction = Transaction::findOrFail($transaction_id);
-        return view('users\userRatings\create', compact('transaction'));
+        return view('users.userRatings.create', compact('transaction'));
     }
 
 

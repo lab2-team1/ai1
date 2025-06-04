@@ -12,6 +12,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('listing_id');
             $table->string('image_url', 255);
+            $table->boolean('is_primary')->default(false);
+            $table->integer('order')->default(0);
             $table->timestamps();
 
             $table->foreign('listing_id')
@@ -25,4 +27,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('listing_images');
     }
-}; 
+};

@@ -13,7 +13,7 @@
                     <div style="color: green;">{{ session('success') }}</div>
                 @endif
 
-                <form method="POST" action="{{ route('user.listings.store') }}" class="edit-form">
+                <form method="POST" action="{{ route('user.listings.store') }}" class="edit-form" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group">
@@ -54,11 +54,24 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="submit-button">Add listing</button>
+                    <div class="form-group">
+                        <label for="images">Images:</label>
+                        <input type="file" id="images" name="images[]" multiple accept="image/*">
+                        <small class="form-text text-muted">You can select multiple images. Supported formats: JPG, PNG, GIF</small>
+                        @error('images')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
+                        @error('images.*')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <button type="submit" class="submit-button">Add Listing</button>
                 </form>
             </section>
         </div>
 
         @include('shared.footer')
+        <script src="{{ asset('js/image-delete.js') }}"></script>
     </body>
 </html>

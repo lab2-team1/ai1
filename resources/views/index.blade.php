@@ -65,11 +65,23 @@
                 </div>
 
                 <section class="latest-listings">
-                    <h2>Najnowsze ogłoszenia</h2>
+                    <h2>Newest listings</h2>
                     <div class="listings-grid">
                         @foreach($listings as $listing)
                             <div class="listing-card">
-                                <div class="listing-image"></div>
+                                <div class="listing-image">
+                                    @if($listing->images->isNotEmpty())
+                                        <div class="image-slideshow" data-listing-id="{{ $listing->id }}">
+                                            @foreach($listing->images->sortBy('order') as $image)
+                                                <div class="slide {{ $loop->first ? 'active' : '' }}">
+                                                    <img src="{{ asset('storage/' . $image->image_url) }}" alt="{{ $listing->title }}" class="listing-img" loading="lazy">
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        <div class="no-image">No Image Available</div>
+                                    @endif
+                                </div>
                                 <div class="listing-content">
                                     <h3 class="listing-title">{{ $listing->title }}</h3>
                                     <p class="listing-description">{{ Str::limit($listing->description, 100) }}</p>

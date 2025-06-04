@@ -58,4 +58,20 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($transactionId);
         return view('payment.confirmation', compact('transaction'));
     }
+
+    public function confirm(Request $request, $transactionId)
+    {
+        $transaction = Transaction::findOrFail($transactionId);
+        $user = Auth::user();
+        // Tylko kupujący może potwierdzić
+        if ($transaction->buyer_id !== $user->id) {
+            return redirect()->back()->with('error', 'Nie masz uprawnień do potwierdzenia tej transakcji.');
+        }
+        if ($transaction->payment_status !== 'pending') {
+            return redirect()->back()->with('error', 'Transakcja nie jest w stanie oczekiwania.');
+        }
+        $transaction->payment_status = 'confirmed';
+        $transaction->save();
+        return redirect()->route('user.transactions')->with('success', 'Transakcja została potwierdzona!');
+    }
 }

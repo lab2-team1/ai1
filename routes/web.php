@@ -12,6 +12,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserAddressController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\UserRatingController;
 
 Route::resource('users', UserController::class)->only(['index', 'show']);
 
@@ -25,6 +26,10 @@ Route::post('/2fa/verify', [AuthController::class, 'verify2fa'])->name('2fa.veri
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/user/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+
+    Route::get('/user/transactions', [UserController::class, 'transactions'])->name('user.transactions');
+
+
     Route::put('/user/update', [UserController::class, 'update'])->name('user.update');
 
     // 2FA Routes
@@ -64,6 +69,8 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/auth/logout', 'logout')->name('logout');
     Route::get('/auth/register', 'register')->name('register');
     Route::post('/auth/register', 'store')->name('register.store');
+    Route::get('/userRatings/create/{transaction_id}', [UserRatingController::class, 'create'])->name('userRatings.create');
+    Route::post('/userRatings', [UserRatingController::class, 'store'])->name('userRatings.store');
 });
 
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -91,3 +98,5 @@ Route::post('/listings/{listing}/buy', [TransactionController::class, 'store'])-
 Route::get('/payment/choose/{transaction}', [TransactionController::class, 'choosePayment'])->middleware('auth')->name('payment.choose');
 Route::post('/payment/choose/{transaction}', [TransactionController::class, 'processPayment'])->middleware('auth')->name('payment.process');
 Route::get('/payment/confirmation/{transaction}', [TransactionController::class, 'confirmation'])->middleware('auth')->name('payment.confirmation');
+Route::post('/transactions/{transaction}/confirm', [TransactionController::class, 'confirm'])->middleware('auth')->name('transactions.confirm');
+

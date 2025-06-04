@@ -24,9 +24,15 @@ class UserController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
-        $addresses = $user->addresses()->get();
 
-        return view('dashboards.userDashboard', compact('user', 'addresses'));
+
+        $addresses = $user ? $user->addresses : new Collection();
+        $transactionsKupione = $user ? $user->transactionsKupione()->with('listing', 'seller')->latest('transaction_date')->get() : collect();
+        $transactionsSprzedane = $user ? $user->transactionsSprzedane()->with('listing', 'buyer')->latest('transaction_date')->get() : collect();
+
+
+
+        return view('dashboards.userDashboard', compact('user', 'addresses', 'transactionsKupione', 'transactionsSprzedane'));
     }
 
     /**
@@ -41,11 +47,32 @@ class UserController extends Controller
     /**
      * Wyświetl profil konkretnego użytkownika.
      */
+
     public function show($id)
     {
         $user = User::findOrFail($id);
         $listings = $user->listings()->active()->latest()->get();
-        return view('users.show', compact('user', 'listings'));
+
+        // DODAJ TO:
+        $ratingsAsBuyer = \App\Models\UserRating::where('rated_user_id', $user->id)
+            ->whereHas('transaction', function ($q) use ($user) {
+                $q->where('buyer_id', $user->id);
+            })
+            ->with(['transaction.listing', 'rater'])
+            ->latest()
+            ->take(5)
+            ->get();
+
+        $ratingsAsSeller = \App\Models\UserRating::where('rated_user_id', $user->id)
+            ->whereHas('transaction', function ($q) use ($user) {
+                $q->where('seller_id', $user->id);
+            })
+            ->with(['transaction.listing', 'rater'])
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view('users.show', compact('user', 'listings', 'ratingsAsBuyer', 'ratingsAsSeller'));
     }
 
     /**
@@ -140,11 +167,22 @@ class UserController extends Controller
                 ->withErrors(['error' => 'An error occurred while updating data: ' . $e->getMessage()]);
         }
     }
- 
+
+
+    /**
+     * Show user transaction history.
+     */
+    public function transactions()
+    {
+        $user = Auth::user();
+        $transactionsBought = $user ? $user->transactionsKupione()->with('listing', 'seller')->latest('transaction_date')->get() : collect();
+        $transactionsSold = $user ? $user->transactionsSprzedane()->with('listing', 'buyer')->latest('transaction_date')->get() : collect();
+        return view('dashboards.transactions', compact('transactionsBought', 'transactionsSold'));
+    }
     public function show2faSetup()
     {
         $user = Auth::user();
-        
+
         if (!$user->otp_secret) {
             $otp = TOTP::create();
             $user->otp_secret = $otp->getSecret();

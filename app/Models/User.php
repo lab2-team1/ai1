@@ -84,4 +84,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(\App\Models\Listing::class);
     }
+
+    public function transactionsKupione()
+    {
+        return $this->hasMany(\App\Models\Transaction::class, 'buyer_id');
+    }
+
+    public function transactionsSprzedane()
+    {
+        return $this->hasMany(\App\Models\Transaction::class, 'seller_id');
+    }
 }

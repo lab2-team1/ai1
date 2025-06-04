@@ -40,7 +40,7 @@ class AuthController extends Controller
             $user = Auth::user();
 
             // Jeśli użytkownik ma aktywne 2FA
-            if ($user->otp_secret) {
+            if ($user->two_factor_enabled && $user->otp_secret) {
                 Auth::logout(); // Wyloguj z głównej sesji
                 $request->session()->put('2fa:user:id', $user->id); // Zapamiętaj user_id w sesji
                 return redirect()->route('2fa.verify');

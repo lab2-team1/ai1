@@ -68,7 +68,7 @@
                     <h2>Newest listings</h2>
                     <div class="listings-grid">
                         @foreach($listings as $listing)
-                            <div class="listing-card">
+                            <div class="listing-card @if($listing->promotion_expires_at && $listing->promotion_expires_at->isFuture()) promoted-listing @endif">
                                 <div class="listing-image">
                                     @if($listing->images->isNotEmpty())
                                         <div class="image-slideshow" data-listing-id="{{ $listing->id }}">
@@ -83,6 +83,9 @@
                                     @endif
                                 </div>
                                 <div class="listing-content">
+                                    @if($listing->promotion_expires_at && $listing->promotion_expires_at->isFuture())
+                                        <span class="promotion-badge">Promoted listing!</span>
+                                    @endif
                                     <h3 class="listing-title">{{ $listing->title }}</h3>
                                     <p class="listing-description">{{ Str::limit($listing->description, 100) }}</p>
                                     <span class="listing-category">{{ $listing->category->name }}</span>

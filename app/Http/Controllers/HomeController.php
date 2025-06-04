@@ -13,6 +13,11 @@ class HomeController extends Controller
         $query = Listing::with(['user', 'category'])
             ->where('status', Listing::STATUS_ACTIVE);
 
+        // Najpierw promowane, potem reszta
+        $query->orderByRaw('(promotion_expires_at IS NOT NULL AND promotion_expires_at > NOW()) DESC')
+              ->orderByRaw('CASE WHEN promotion_expires_at IS NOT NULL AND promotion_expires_at > NOW() THEN promotion_expires_at ELSE NULL END DESC')
+              ->latest();
+
         // Category filter
         if ($request->filled('category')) {
             $query->where('category_id', $request->category);

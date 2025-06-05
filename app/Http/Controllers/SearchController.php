@@ -82,19 +82,16 @@ class SearchController extends Controller
     public function suggestions(Request $request)
     {
         $query = $request->get('query');
-
         if (empty($query)) {
             return response()->json([]);
         }
-
-        $suggestions = Listing::where('title', 'like', "%{$query}%")
-            ->orWhere('description', 'like', "%{$query}%")
+        $suggestions = Listing::whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($query) . '%'])
+            ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($query) . '%'])
             ->select('title')
             ->distinct()
             ->limit(5)
             ->get()
             ->pluck('title');
-
         return response()->json($suggestions);
     }
 }

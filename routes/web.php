@@ -94,6 +94,7 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
 // Public routes
 Route::get('/listings', [ListingController::class, 'index'])->name('listings.index');
 Route::get('/listings/{listing}', [ListingController::class, 'show'])->name('listings.show');
+Route::get('/search-suggestions', [SearchController::class, 'suggestions'])->name('search.suggestions');
 Route::post('/listings/{listing}/buy', [TransactionController::class, 'store'])->middleware('auth')->name('listings.buy');
 Route::get('/payment/choose/{transaction}', [TransactionController::class, 'choosePayment'])->middleware('auth')->name('payment.choose');
 Route::post('/payment/choose/{transaction}', [TransactionController::class, 'processPayment'])->middleware('auth')->name('payment.process');

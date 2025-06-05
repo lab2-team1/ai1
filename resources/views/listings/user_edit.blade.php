@@ -13,7 +13,7 @@
                     <div style="color: green;">{{ session('success') }}</div>
                 @endif
 
-                <form method="POST" action="{{ route('user.listings.update', $listing->id) }}" class="edit-form">
+                <form method="POST" action="{{ route('user.listings.update', $listing->id) }}" class="edit-form" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -55,11 +55,46 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="submit-button">Save changes</button>
+                    <div class="form-group">
+                        <label>Current Images:</label>
+                        <div class="current-images" id="sortable-images">
+                            @if($listing->images && count($listing->images) > 0)
+                                @foreach($listing->images->sortBy('order') as $image)
+                                    <div class="image-container" data-image-id="{{ $image->id }}">
+                                        <img src="{{ asset('storage/' . $image->image_url) }}" alt="Listing image" style="max-width: 200px; margin: 5px;">
+                                        <div class="image-actions">
+                                            <button type="button" class="delete-image"
+                                                    data-image-id="{{ $image->id }}"
+                                                    data-delete-url="{{ route('user.listings.delete-image', $image->id) }}">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <p>No images uploaded yet.</p>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="images">Add New Images:</label>
+                        <input type="file" id="images" name="images[]" multiple accept="image/*">
+                        <small class="form-text text-muted">You can select multiple images. Supported formats: JPG, PNG, GIF</small>
+                        @error('images')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
+                        @error('images.*')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <button type="submit" class="submit-button">Save Changes</button>
                 </form>
             </section>
         </div>
 
         @include('shared.footer')
+        <script src="{{ asset('js/image-management.js') }}"></script>
     </body>
 </html>

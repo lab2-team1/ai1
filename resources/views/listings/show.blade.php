@@ -7,7 +7,7 @@
         <div class="admin-panel">
             @include('shared.adminSidebar')
             <section class="admin-content">
-                <h1>Szczegóły ogłoszenia</h1>
+                <h1>Listing Details</h1>
 
                 <div class="listing-details">
                     <div class="detail-group">
@@ -16,22 +16,22 @@
                     </div>
 
                     <div class="detail-group">
-                        <h3>Informacje</h3>
+                        <h3>Information</h3>
                         <ul class="listing-info">
-                            <li><strong>Cena:</strong> {{ $listing->formatted_price }}</li>
+                            <li><strong>Price:</strong> {{ $listing->formatted_price }}</li>
                             <li><strong>Status:</strong> {{ ucfirst($listing->status) }}</li>
-                            <li><strong>Kategoria:</strong> {{ $listing->category ? $listing->category->name : '-' }}</li>
-                            <li><strong>Właściciel:</strong> {{ $listing->user ? $listing->user->first_name . ' ' . $listing->user->last_name : '-' }}</li>
-                            <li><strong>Data dodania:</strong> {{ $listing->created_at->format('d.m.Y H:i') }}</li>
+                            <li><strong>Category:</strong> {{ $listing->category ? $listing->category->name : '-' }}</li>
+                            <li><strong>Owner:</strong> {{ $listing->user ? $listing->user->first_name . ' ' . $listing->user->last_name : '-' }}</li>
+                            <li><strong>Created:</strong> {{ $listing->created_at->format('d.m.Y H:i') }}</li>
                         </ul>
                     </div>
 
                     <div class="detail-actions">
-                        <a href="{{ route('admin.listings.edit', $listing->id) }}" class="btn-primary">Edytuj</a>
+                        <a href="{{ route('admin.listings.edit', $listing->id) }}" class="btn-primary">Edit</a>
                         <form action="{{ route('admin.listings.destroy', $listing->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn-danger" onclick="return confirm('Na pewno usunąć to ogłoszenie?')">Usuń</button>
+                            <button type="submit" class="btn-danger" onclick="return confirm('Are you sure you want to delete this listing?')">Delete</button>
                         </form>
                     </div>
                 </div>

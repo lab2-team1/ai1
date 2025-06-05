@@ -28,4 +28,8 @@ class UserRating extends Model
     {
         return $this->belongsTo(User::class, 'rated_by_user_id');
     }
+    public function rater()
+{
+    return $this->belongsTo(\App\Models\User::class, 'rated_by_user_id');
+}
 }

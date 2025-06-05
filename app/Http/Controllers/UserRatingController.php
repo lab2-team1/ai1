@@ -12,8 +12,9 @@ class UserRatingController extends Controller
     public function create($transaction_id)
     {
         $transaction = Transaction::findOrFail($transaction_id);
-        return view('users\userRatings\create', compact('transaction'));
+        return view('users.userRatings.create', compact('transaction'));
     }
+
 
     public function store(Request $request)
     {
@@ -24,14 +25,23 @@ class UserRatingController extends Controller
             'comment' => 'nullable|string|max:1000',
         ]);
 
-        UserRating::create([
+        // Sprawdź, czy użytkownik już ocenił tę transakcję
+        $alreadyRated = \App\Models\UserRating::where('transaction_id', $validated['transaction_id'])
+            ->where('rated_by_user_id', auth()->id())
+            ->exists();
+
+        if ($alreadyRated) {
+            return redirect()->back()->withErrors(['rating' => 'Już wystawiłeś ocenę dla tej transakcji.']);
+        }
+
+        \App\Models\UserRating::create([
             'transaction_id' => $validated['transaction_id'],
             'rated_user_id' => $validated['rated_user_id'],
-            'rated_by_user_id' => Auth::id(),
+            'rated_by_user_id' => auth()->id(),
             'rating' => $validated['rating'],
             'comment' => $validated['comment'],
         ]);
 
-        return redirect()->route('user.dashboard')->with('success', 'Ocena została dodana!');
+        return redirect()->route('user.transactions')->with('success', 'Ocena została dodana!');
     }
 }

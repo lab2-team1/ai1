@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\UserController as Admin_UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserAddressController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\UserRatingController;
 
 Route::resource('users', UserController::class)->only(['index', 'show']);
@@ -55,6 +56,11 @@ Route::middleware(['auth'])->group(function () {
         'update' => 'user.listings.update',
         'destroy' => 'user.listings.destroy',
     ]);
+
+    // Add route for user image deletion
+    Route::delete('/user/listings/image/{image}', [ListingController::class, 'deleteImage'])->name('user.listings.delete-image');
+    Route::post('/user/listings/image/{image}/primary', [ImageController::class, 'setPrimary'])->name('user.listings.set-primary-image');
+    Route::post('/user/listings/{listing}/reorder-images', [ImageController::class, 'reorder'])->name('user.listings.reorder-images');
 });
 
 Route::controller(AuthController::class)->group(function () {
@@ -70,6 +76,12 @@ Route::controller(AuthController::class)->group(function () {
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->name('listings.edit');
     Route::put('/listings/{listing}', [ListingController::class, 'update'])->name('listings.update');
+
+    // Add route for admin image deletion
+    Route::delete('/listings/image/{image}', [ListingController::class, 'deleteImage'])->name('listings.delete-image');
+    Route::post('/listings/image/{image}/primary', [ImageController::class, 'setPrimary'])->name('listings.set-primary-image');
+    Route::post('/listings/{listing}/reorder-images', [ImageController::class, 'reorder'])->name('listings.reorder-images');
+
     Route::get('/dashboard', function () {
         return view('dashboards.admindashboard');
     })->name('dashboard');
@@ -82,6 +94,7 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
 // Public routes
 Route::get('/listings', [ListingController::class, 'index'])->name('listings.index');
 Route::get('/listings/{listing}', [ListingController::class, 'show'])->name('listings.show');
+Route::get('/search-suggestions', [SearchController::class, 'suggestions'])->name('search.suggestions');
 Route::post('/listings/{listing}/buy', [TransactionController::class, 'store'])->middleware('auth')->name('listings.buy');
 Route::get('/payment/choose/{transaction}', [TransactionController::class, 'choosePayment'])->middleware('auth')->name('payment.choose');
 Route::post('/payment/choose/{transaction}', [TransactionController::class, 'processPayment'])->middleware('auth')->name('payment.process');

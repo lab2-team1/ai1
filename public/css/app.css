@@ -1,0 +1,26 @@
+/* Search Suggestions Styles */
+.search-container .search-input-group {
+    position: relative !important;
+}
+
+.search-container .search-suggestions {
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: white !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    z-index: 1000 !important;
+    display: none;
+}
+
+.search-container .suggestion-item {
+    padding: 8px 12px !important;
+    cursor: pointer !important;
+}
+
+.search-container .suggestion-item:hover {
+    background-color: #f5f5f5 !important;
+}

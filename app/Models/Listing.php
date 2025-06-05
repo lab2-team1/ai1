@@ -40,6 +40,28 @@ class Listing extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(ListingImage::class);
+    }
+
+    public function primaryImage()
+    {
+        return $this->hasOne(ListingImage::class)->where('is_primary', true);
+    }
+
+    public function getPrimaryImageUrlAttribute()
+    {
+        $primaryImage = $this->primaryImage;
+        if ($primaryImage) {
+            return asset('storage/' . $primaryImage->image_url);
+        }
+
+        // Fallback to first image if no primary image is set
+        $firstImage = $this->images()->orderBy('order')->first();
+        return $firstImage ? asset('storage/' . $firstImage->image_url) : null;
+    }
+
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
@@ -128,4 +150,17 @@ class Listing extends Model
         $this->increment('visits');
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($listing) {
+            foreach ($listing->images as $image) {
+                if (file_exists(public_path('storage/' . $image->image_url))) {
+                    unlink(public_path('storage/' . $image->image_url));
+                }
+                $image->delete();
+            }
+        });
+    }
 }

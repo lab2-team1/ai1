@@ -30,12 +30,12 @@ document.addEventListener('DOMContentLoaded', function() {
             labels: monthlyLabels,
             datasets: [
                 {
-                    label: 'Kupione',
+                    label: 'Bought',
                     data: monthlyBought,
                     backgroundColor: '#60a5fa',
                 },
                 {
-                    label: 'Sprzedane',
+                    label: 'Sold',
                     data: monthlySold,
                     backgroundColor: '#fbbf24',
                 }
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
             responsive: true,
             plugins: {
                 legend: { position: 'top' },
-                title: { display: true, text: 'Liczba transakcji miesięcznie' }
+                title: { display: true, text: 'Number of transactions per month' }
             },
             scales: { y: { beginAtZero: true } }
         }
@@ -58,14 +58,14 @@ document.addEventListener('DOMContentLoaded', function() {
             labels: monthlyLabels,
             datasets: [
                 {
-                    label: 'Suma wydatków (kupione)',
+                    label: 'Total spent (bought)',
                     data: monthlyBoughtSum,
                     borderColor: '#2563eb',
                     backgroundColor: 'rgba(37,99,235,0.1)',
                     fill: true,
                 },
                 {
-                    label: 'Suma zarobków (sprzedane)',
+                    label: 'Total earned (sold)',
                     data: monthlySoldSum,
                     borderColor: '#f59e42',
                     backgroundColor: 'rgba(245,158,66,0.1)',
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
             responsive: true,
             plugins: {
                 legend: { position: 'top' },
-                title: { display: true, text: 'Suma wartości transakcji miesięcznie (PLN)' }
+                title: { display: true, text: 'Total transaction value per month (PLN)' }
             },
             scales: { y: { beginAtZero: true } }
         }

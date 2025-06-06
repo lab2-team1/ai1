@@ -157,7 +157,7 @@
         data-boughtsum='@json($monthlyBoughtSum ?? [])'
         data-soldsum='@json($monthlySoldSum ?? [])'>
     </div>
-    @vite('resources/js/transactionStats.js')
+    <script src="/js/transactionStats.js"></script>
 </body>
 
 </html>

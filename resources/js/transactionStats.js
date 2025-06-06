@@ -1,8 +1,19 @@
 // Kod odpowiedzialny za wykresy transakcji
 // Wymaga Chart.js (np. przez CDN w widoku lub import w bundlerze)
 
+// Tab switching logic for transactions dashboard
+function showTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(tabId).style.display = 'block';
+    document.querySelector('.tab-btn[onclick="showTab(\'' + tabId + '\')"]').classList.add('active');
+}
+
+// Chart rendering logic
+// Pobierz dane z atrybutów data- na elemencie #transactions-data
 document.addEventListener('DOMContentLoaded', function() {
-    // Pobierz dane z atrybutów data- na elemencie #transactions-data
+    // Tab switching is handled by showTab (function is global)
+    // Chart rendering below:
     const dataElem = document.getElementById('transactions-data');
     if (!dataElem) return;
     const monthlyLabels = JSON.parse(dataElem.dataset.labels || '[]');
@@ -19,12 +30,12 @@ document.addEventListener('DOMContentLoaded', function() {
             labels: monthlyLabels,
             datasets: [
                 {
-                    label: 'Bought',
+                    label: 'Kupione',
                     data: monthlyBought,
                     backgroundColor: '#60a5fa',
                 },
                 {
-                    label: 'Sold',
+                    label: 'Sprzedane',
                     data: monthlySold,
                     backgroundColor: '#fbbf24',
                 }
@@ -34,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
             responsive: true,
             plugins: {
                 legend: { position: 'top' },
-                title: { display: true, text: 'Monthly transaction count' }
+                title: { display: true, text: 'Liczba transakcji miesięcznie' }
             },
             scales: { y: { beginAtZero: true } }
         }
@@ -47,14 +58,14 @@ document.addEventListener('DOMContentLoaded', function() {
             labels: monthlyLabels,
             datasets: [
                 {
-                    label: 'Total spent (bought)',
+                    label: 'Suma wydatków (kupione)',
                     data: monthlyBoughtSum,
                     borderColor: '#2563eb',
                     backgroundColor: 'rgba(37,99,235,0.1)',
                     fill: true,
                 },
                 {
-                    label: 'Total earned (sold)',
+                    label: 'Suma zarobków (sprzedane)',
                     data: monthlySoldSum,
                     borderColor: '#f59e42',
                     backgroundColor: 'rgba(245,158,66,0.1)',
@@ -66,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
             responsive: true,
             plugins: {
                 legend: { position: 'top' },
-                title: { display: true, text: 'Monthly transaction value (PLN)' }
+                title: { display: true, text: 'Suma wartości transakcji miesięcznie (PLN)' }
             },
             scales: { y: { beginAtZero: true } }
         }

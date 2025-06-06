@@ -150,82 +150,14 @@
     </div>
     @include('shared.footer')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(tabId).style.display = 'block';
-            document.querySelector('.tab-btn[onclick="showTab(\'' + tabId + '\')"]').classList.add('active');
-        }
-        // Dane do wykresów z PHP
-        const monthlyLabels = @json($monthlyLabels ?? []);
-        const monthlyBought = @json($monthlyBought ?? []);
-        const monthlySold = @json($monthlySold ?? []);
-        const monthlyBoughtSum = @json($monthlyBoughtSum ?? []);
-        const monthlySoldSum = @json($monthlySoldSum ?? []);
-        document.addEventListener('DOMContentLoaded', function() {
-            // Wykres liczby transakcji
-            const ctx1 = document.getElementById('transactionsCountChart').getContext('2d');
-            new Chart(ctx1, {
-                type: 'bar',
-                data: {
-                    labels: monthlyLabels,
-                    datasets: [
-                        {
-                            label: 'Kupione',
-                            data: monthlyBought,
-                            backgroundColor: '#60a5fa',
-                        },
-                        {
-                            label: 'Sprzedane',
-                            data: monthlySold,
-                            backgroundColor: '#fbbf24',
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: { position: 'top' },
-                        title: { display: true, text: 'Liczba transakcji miesięcznie' }
-                    },
-                    scales: { y: { beginAtZero: true } }
-                }
-            });
-            // Wykres sumy wartości
-            const ctx2 = document.getElementById('transactionsSumChart').getContext('2d');
-            new Chart(ctx2, {
-                type: 'line',
-                data: {
-                    labels: monthlyLabels,
-                    datasets: [
-                        {
-                            label: 'Suma wydatków (kupione)',
-                            data: monthlyBoughtSum,
-                            borderColor: '#2563eb',
-                            backgroundColor: 'rgba(37,99,235,0.1)',
-                            fill: true,
-                        },
-                        {
-                            label: 'Suma zarobków (sprzedane)',
-                            data: monthlySoldSum,
-                            borderColor: '#f59e42',
-                            backgroundColor: 'rgba(245,158,66,0.1)',
-                            fill: true,
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: { position: 'top' },
-                        title: { display: true, text: 'Suma wartości transakcji miesięcznie (PLN)' }
-                    },
-                    scales: { y: { beginAtZero: true } }
-                }
-            });
-        });
-    </script>
+    <div id="transactions-data" style="display:none"
+        data-labels='@json($monthlyLabels ?? [])'
+        data-bought='@json($monthlyBought ?? [])'
+        data-sold='@json($monthlySold ?? [])'
+        data-boughtsum='@json($monthlyBoughtSum ?? [])'
+        data-soldsum='@json($monthlySoldSum ?? [])'>
+    </div>
+    @vite('resources/js/transactionStats.js')
 </body>
 
 </html>

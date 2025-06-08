@@ -1519,3 +1519,22 @@ code {
     border-radius: 0.25rem;
     font-family: monospace;
 }
+
+.promoted-listing {
+    border: 3px solid gold;
+    box-shadow: 0 0 12px 2px gold;
+    position: relative;
+}
+
+.promotion-badge {
+    display: inline-block;
+    background: gold;
+    color: #333;
+    font-weight: bold;
+    padding: 0.3em 0.8em;
+    border-radius: 999px;
+    font-size: 0.95em;
+    margin-bottom: 0.7em;
+    margin-right: 0.5em;
+    box-shadow: 0 2px 6px rgba(255,215,0,0.15);
+}

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('listings', function (Blueprint $table) {
-            $table->unsignedInteger('visits')->default(0);
+            $table->timestamp('promotion_expires_at')->nullable()->after('status');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('listings', function (Blueprint $table) {
-            $table->dropColumn('visits');
+            $table->dropColumn('promotion_expires_at');
         });
     }
 };

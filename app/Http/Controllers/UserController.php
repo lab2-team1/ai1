@@ -179,6 +179,7 @@ class UserController extends Controller
         $transactionsSold = $user ? $user->transactionsSprzedane()->with('listing', 'buyer')->latest('transaction_date')->get() : collect();
         return view('dashboards.transactions', compact('transactionsBought', 'transactionsSold'));
     }
+
     public function show2faSetup()
     {
         $user = Auth::user();
@@ -247,5 +248,13 @@ class UserController extends Controller
 
         return redirect()->route('user.2fa')
             ->with('success', 'Uwierzytelnianie dwuskładnikowe zostało wyłączone.');
+    }
+
+    public function transactionStats()
+    {
+        $user = Auth::user();
+        $transactionsBought = $user ? $user->transactionsKupione()->with('listing.category', 'seller')->latest('transaction_date')->get() : collect();
+        $transactionsSold = $user ? $user->transactionsSprzedane()->with('listing.category', 'buyer')->latest('transaction_date')->get() : collect();
+        return view('dashboards.transactionStats', compact('transactionsBought', 'transactionsSold'));
     }
 }

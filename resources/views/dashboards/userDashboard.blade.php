@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     @include('shared.head', ['pageTitle' => 'MarketPlace - Buy and Sell with Ease'])
+    <head>
+        @vite(['resources/js/userDashboard.js'])
+    </head>
     <body>
         @include('shared.navigation')
 
@@ -22,7 +25,7 @@
                     <label for="first_name">First Name</label>
                     <div class="field-with-edit">
                         <input type="text" id="first_name" name="first_name" value="{{ old('first_name', Auth::user()->first_name) }}" class="form-control @error('first_name') is-invalid @enderror" readOnly>
-                        <button type="button" class="edit-button" onclick="toggleEdit('first_name')">
+                        <button type="button" class="edit-button">
                             <i class="fa fa-edit"></i>
                         </button>
                     </div>
@@ -35,7 +38,7 @@
                     <label for="last_name">Last Name</label>
                     <div class="field-with-edit">
                         <input type="text" id="last_name" name="last_name" value="{{ old('last_name', Auth::user()->last_name) }}" class="form-control @error('last_name') is-invalid @enderror" readOnly>
-                        <button type="button" class="edit-button" onclick="toggleEdit('last_name')">
+                        <button type="button" class="edit-button">
                             <i class="fa fa-edit"></i>
                         </button>
                     </div>
@@ -48,7 +51,7 @@
                     <label for="email">Email</label>
                     <div class="field-with-edit">
                         <input type="email" id="email" name="email" value="{{ old('email', Auth::user()->email) }}" class="form-control @error('email') is-invalid @enderror" readOnly>
-                        <button type="button" class="edit-button" onclick="toggleEdit('email')">
+                        <button type="button" class="edit-button">
                             <i class="fa fa-edit"></i>
                         </button>
                     </div>
@@ -61,7 +64,7 @@
                     <label for="phone">Phone Number</label>
                     <div class="field-with-edit">
                         <input type="text" id="phone" name="phone" value="{{ old('phone', Auth::user()->phone) }}" class="form-control @error('phone') is-invalid @enderror" readOnly>
-                        <button type="button" class="edit-button" onclick="toggleEdit('phone')">
+                        <button type="button" class="edit-button">
                             <i class="fa fa-edit"></i>
                         </button>
                     </div>
@@ -118,7 +121,6 @@
                 </table>
             @endif
             <button type="button" class="btn btn-primary mt-3" id="addAddressButton">Add New Address</button>
-
             <div id="addAddressFormContainer" style="display: none;" class="mt-4">
                 <h3>Add New Address</h3>
                 <form action="{{ route('user.addresses.store') }}" method="POST" id="addAddressForm">
@@ -189,7 +191,6 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-
                     <div class="mb-3">
                         <label for="edit_country" class="form-label">Country</label>
                         <input type="text" class="form-control @error('country') is-invalid @enderror" id="edit_country" name="country" value="{{ old('country') }}" required>
@@ -199,17 +200,13 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">Save Changes</button>
-                    <button type="button" class="btn btn-secondary" id="cancelEditAddress">Cancel</button>
+                    <button type="button" class="btn btn-secondary" id="cancelEditAddress">Cancel</button>  
                 </form>
             </div>
 
         </section>
         </div>
 
-        <!-- Footer -->
         @include('shared.footer')
-
-        @vite(['resources/js/userDashboard.js'])
-
     </body>
 </html>

@@ -4,7 +4,5 @@
         <li><a href="{{ route('admin.listings.index') }}">Manage Listings</a></li>
         <li><a href="{{ route('admin.categories.index') }}">Manage Categories</a></li>
         <li><a href="{{ route('admin.addresses.index') }}">Manage Addresses</a></li>
-        <li><a href="#">Manage ..</a></li>
-        <li><a href="#">Manage ..</a></li>
     </ul>
 </nav>

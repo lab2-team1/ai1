@@ -24,7 +24,8 @@
                         </div>
                     @endif
                 </div>
-                <a href="{{ Auth::check() ? '#' : route('login') }}" class="btn-primary">Create Offer</a>
+                <a href="{{ Auth::check() ? route('user.listings.create') : route('login') }}" class="btn-primary">Create Offer</a>
+
             </div>
         </div>
     </div>

@@ -13,7 +13,7 @@ class Listing extends Model
         'description',
         'price',
         'status',
-        'promotion_expires_at'
+        'promotion_expires_at',
         'visits'
     ];
 

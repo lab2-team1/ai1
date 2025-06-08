@@ -235,6 +235,24 @@ a.btn-primary{
     font-size: 0.875rem;
 }
 
+.date-range-container {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.date-range-input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 0.875rem;
+}
+
+.date-range-separator {
+    color: #4a5568;
+}
+
 .price-range-separator {
     color: #4a5568;
 }

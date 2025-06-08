@@ -23,9 +23,12 @@ class HomeController extends Controller
             $query->where('category_id', $request->category);
         }
 
-        // Location filter
-        if ($request->filled('location')) {
-            $query->where('location', 'like', '%' . $request->location . '%');
+        // Date range filter
+        if ($request->filled('date_from')) {
+            $query->whereDate('created_at', '>=', $request->date_from);
+        }
+        if ($request->filled('date_to')) {
+            $query->whereDate('created_at', '<=', $request->date_to);
         }
 
         // Price range filter

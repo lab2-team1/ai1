@@ -7,9 +7,15 @@
 ---
 
 
+
 ### Tytuł projektu
 
 Portal z ogłoszeniami kupna-sprzedaży
+=======
+### Temat projektu
+
+Portal z ogłoszeniami kupna-sprzedaży 
+
 
 ---
 
@@ -22,20 +28,19 @@ Portal z ogłoszeniami kupna-sprzedaży
 | [Oscar Borowiec](https://github.com/oscarek03) | członek zespołu |
 | [Łukasz Babiś](https://github.com/Chirockat) | członek zespołu |
 
+
 ---
 
 
 ## Opis projektu
 
+
 Aplikacja webowa oparta na frameworku Laravel, która umożliwia
 
+
 Dostępne funkcjonalności:
-* uwierzytelnianie i autoryzacja użytkowników
-* funkcjonalność 2,
-* ...
-* ...
-* ...
-* ...
+* Uwierzytelnianie i autoryzacja użytkowników,
+* Wystawianie produktów w serwisie aukcyjnym,
 
 ### Narzędzia i technologie
 * PHP 8.2
@@ -46,6 +51,7 @@ Dostępne funkcjonalności:
 * Composer (najnowsza wersja)
 * PostgreSQL
 
+
 ### Uruchomienie aplikacji
 
 Napisać, co trzeba mieć zainstalowane (oraz inne potrzebne dodatkowe informacje).
@@ -55,11 +61,13 @@ Umieścić komendy z start.bat
 
 ```
 
-Przykładowi użytkownicy aplikacji:
+
+
 * administrator: swit@email.com 1234
 * użytkownik: kowalski@email.com 1234
 * użytkownik: nowak@email.com 1234
 * użytkownik: wisniewski@email.com 1234
+
 
 ### Baza danych
 

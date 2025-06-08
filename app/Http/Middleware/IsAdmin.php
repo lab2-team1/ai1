@@ -10,10 +10,9 @@ class IsAdmin
 {
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->admin) {
-            return $next($request);
+        if (!Auth::check() || !Auth::user()->admin) {
+            abort(403, 'Brak uprawnień do tej sekcji.');
         }
-
-        return redirect('/')->with('error', 'Unauthorized access.');
+        return $next($request);
     }
 }

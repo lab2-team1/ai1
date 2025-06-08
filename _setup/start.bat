@@ -1,6 +1,21 @@
 @echo off
 REM setup.bat - pełna inicjalizacja środowiska Laravel + PostgreSQL
 
+REM 0. Automatyczne pobranie instalatora PostgreSQL (Windows, wersja 15)
+set "PG_INSTALLER_URL=https://get.enterprisedb.com/postgresql/postgresql-15.6-1-windows-x64.exe"
+set "PG_INSTALLER=postgresql-15.6-1-windows-x64.exe"
+
+if not exist "%PG_INSTALLER%" (
+    echo Pobieranie instalatora PostgreSQL...
+    powershell -Command "Invoke-WebRequest -Uri '%PG_INSTALLER_URL%' -OutFile '%PG_INSTALLER%'"
+)
+
+echo Uruchamianie instalatora PostgreSQL...
+start "" "%PG_INSTALLER%"
+echo Po zakończeniu instalacji uruchom ponownie ten skrypt.
+pause
+exit /b
+
 REM 1. Tworzenie bazy danych (jeśli nie istnieje)
 echo Tworzenie bazy danych ShopDB...
 psql -U postgres -h 127.0.0.1 -p 5432 -tc "SELECT 1 FROM pg_database WHERE datname = 'ShopDB'" | find "1" >nul

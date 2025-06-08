@@ -7,9 +7,15 @@
 ---
 
 
+
+### Tytuł projektu
+
+Portal z ogłoszeniami kupna-sprzedaży
+=======
 ### Temat projektu
 
 Portal z ogłoszeniami kupna-sprzedaży 
+
 
 ---
 
@@ -19,31 +25,32 @@ Portal z ogłoszeniami kupna-sprzedaży
 | ------ | ------ |
 | [Dawid Bajek](https://github.com/Baju16) | lider zespołu |
 | [Krzysztof Dąbrowski](https://github.com/SooNlK) | członek zespołu |
-| [Łukasz Babiś](https://github.com/Chirockat) | członek zespołu |
 | [Oscar Borowiec](https://github.com/oscarek03) | członek zespołu |
+| [Łukasz Babiś](https://github.com/Chirockat) | członek zespołu |
+
 
 ---
 
 
 ## Opis projektu
 
-Opis słowny założeń projektu, jaki fragment rzeczywistości jest objęty działaniem aplikacji, co użytkownik może zrobić w aplikacji.
+
+Aplikacja webowa oparta na frameworku Laravel, która umożliwia
+
 
 Dostępne funkcjonalności:
 * Uwierzytelnianie i autoryzacja użytkowników,
 * Wystawianie produktów w serwisie aukcyjnym,
-* ...
-* ...
-* ...
-* ...
 
 ### Narzędzia i technologie
-* technologia 1, wersja ...
-* technologia 2, wersja ...
-* ...
-* środowisko 1, wersja ...
-* środowisko 2, wersja ...
-* ...
+* PHP 8.2
+* Laravel Framework 12.0
+* Node.js (najnowsza wersja LTS)
+* Vite 6.2.4
+* Axios 1.8.2
+* Composer (najnowsza wersja)
+* PostgreSQL
+
 
 ### Uruchomienie aplikacji
 
@@ -54,11 +61,13 @@ Umieścić komendy z start.bat
 
 ```
 
-Przykładowi użytkownicy aplikacji:
-* administrator: jan@email.com 1234
-* użytkownik: anna@email.com 1234
-* ...
-* ...
+
+
+* administrator: swit@email.com 1234
+* użytkownik: kowalski@email.com 1234
+* użytkownik: nowak@email.com 1234
+* użytkownik: wisniewski@email.com 1234
+
 
 ### Baza danych
 

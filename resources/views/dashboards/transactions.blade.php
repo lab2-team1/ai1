@@ -43,44 +43,6 @@
                                     <td>
                                         @if ($transaction->listing)
                                             <a href="{{ route('listings.show', $transaction->listing->id) }}">{{ $transaction->listing->title }}</a>
-                                <td>
-                                    @if ($transaction->listing)
-                                        <a
-                                            href="{{ route('listings.show', $transaction->listing->id) }}">{{ $transaction->listing->title }}</a>
-                                    @else
-                                        -
-                                    @endif
-                                </td>
-                                <td>{{ $transaction->seller ? $transaction->seller->first_name . ' ' . $transaction->seller->last_name : '-' }}
-                                </td>
-                                <td>{{ number_format($transaction->amount, 2) }} PLN</td>
-                                <td>{{ $transaction->transaction_date ? \Carbon\Carbon::parse($transaction->transaction_date)->format('d.m.Y H:i') : '-' }}
-                                </td>
-                                <td>{{ ucfirst($transaction->payment_status) }}
-                                    @if ($transaction->payment_status === 'pending')
-                                        <form method="POST"
-                                            action="{{ route('transactions.confirm', $transaction->id) }}"
-                                            style="display:inline;">
-                                            @csrf
-                                            <button type="submit" class="btn btn-primary btn-sm"
-                                                style="margin-left: 8px; padding: 2px 10px; font-size: 0.85em;">Confirm
-                                                receipt</button>
-                                        </form>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if (in_array($transaction->payment_status, ['confirmed', 'canceled']))
-                                        @php
-                                            $alreadyRated = \App\Models\UserRating::where(
-                                                'transaction_id',
-                                                $transaction->id,
-                                            )
-                                                ->where('rated_by_user_id', auth()->id())
-                                                ->exists();
-                                        @endphp
-                                        @if ($alreadyRated)
-                                            <span title="Ocena już wystawiona"
-                                                style="color: #aaa; font-size: 1.3em;">&#9733;</span>
                                         @else
                                             -
                                         @endif

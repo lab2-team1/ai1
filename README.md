@@ -149,48 +149,50 @@ pause
 
 ## Widoki aplikacji 
 
-![Strona główna](./docs-img/glowna.jpeg)
 *Strona główna*
+![Strona główna](./docs-img/glowna.jpeg)
 
-![Logowanie](./docs-img/logowanie.png)
 *Logowanie*
+![Logowanie](./docs-img/logowanie.png)
 
-![Rejstracja](./docs-img/rejstracja.png)
 *Rejestracja*
+![Rejstracja](./docs-img/rejstracja.png)
 
-![Oferta](./docs-img/oferta.jpeg)
 *Oferta*
+![Oferta](./docs-img/oferta.jpeg)
 
+*CRUD Listing*
 ![Oferta](./docs-img/oferty.png)
 ![Oferta](./docs-img/nowa-oferta.png)
 ![Oferta](./docs-img/edytowanie-oferty.png)
 ![Oferta](./docs-img/usuwanie-oferty.png)
-*CRUD Listing*
 
-![Oferta](./docs-img/oferta.jpeg)
-*Oferta*
-
-![Kategoria](./docs-img/oferty.png)
-![Kategoria](./docs-img/nowa-oferta.png)
-![Kategoria](./docs-img/edytowanie-oferty.png)
-![Kategoria](./docs-img/usuwanie-oferty.png)
 *CRUD Categories*
+![Categories](./docs-img/kategorie.png)
+![Categories](./docs-img/nowa-kategoria.png)
+![Categories](./docs-img/edytowanie-kategorii.png)
+![Categories](./docs-img/usuwanie-kategorii.png)
+
+*CRUD Addresses*
+![Adres](./docs-img/adresy.png)
+![Adres](./docs-img/nowy-adres.png)
+![Adres](./docs-img/edytowanie-adresu.png)
+![Adres](./docs-img/usuwanie-adresu.png)
 
 *Zarządzanie użytkownikami*
-
-...
+![Użytkownik](./docs-img/użytkownik.png)
+![Użytkownik](./docs-img/nowy-użytkownik.png)
+![Użytkownik](./docs-img/edytowanie-użytkownika.png)
+![Użytkownik](./docs-img/usuwanie-użytkownika.png)
 
 *Profil użytkownika*
-
-...
+![Panel](./docs-img/panel.png)
+![Panel](./docs-img/panel-oferty.png)
+![Panel](./docs-img/panel-historia.png)
+![Panel](./docs-img/panel-statystyki.png)
+![Panel](./docs-img/panel-2fa.png)
 
 *Dokonanie zakupu/wypożyczenia...*
-
-...
-
-itd.
-
-...
-
-
-...
+![Zakup](./docs-img/kupowanie.png)
+![Zakup](./docs-img/płatność.png)
+![Zakup](./docs-img/potwierdzenie.png)

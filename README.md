@@ -149,20 +149,32 @@ pause
 
 ## Widoki aplikacji 
 
-![Strona główna](./docs-img/screen.png)
+![Strona główna](./docs-img/glowna.jpeg)
 *Strona główna*
 
-![Strona główna](./docs-img/screen.png)
+![Logowanie](./docs-img/logowanie.png)
 *Logowanie*
 
-![Strona główna](./docs-img/screen.png)
+![Rejstracja](./docs-img/rejstracja.png)
 *Rejestracja*
 
-...
+![Oferta](./docs-img/oferta.jpeg)
+*Oferta*
 
-*CRUD*
+![Oferta](./docs-img/oferty.png)
+![Oferta](./docs-img/nowa-oferta.png)
+![Oferta](./docs-img/edytowanie-oferty.png)
+![Oferta](./docs-img/usuwanie-oferty.png)
+*CRUD Listing*
 
-...
+![Oferta](./docs-img/oferta.jpeg)
+*Oferta*
+
+![Kategoria](./docs-img/oferty.png)
+![Kategoria](./docs-img/nowa-oferta.png)
+![Kategoria](./docs-img/edytowanie-oferty.png)
+![Kategoria](./docs-img/usuwanie-oferty.png)
+*CRUD Categories*
 
 *Zarządzanie użytkownikami*
 

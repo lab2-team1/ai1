@@ -4,9 +4,9 @@
     <body>
         @include('shared.navigation')
 
-        <div class="admin-panel">
-            @include('shared.adminSidebar')
-            <section class="admin-content">
+        <div class="user-panel">
+            @include('shared.userSidebar')
+            <section class="user-content">
                 <h1>Add new listing</h1>
 
                 @if(session('success'))

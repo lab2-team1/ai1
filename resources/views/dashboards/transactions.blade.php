@@ -83,41 +83,6 @@
                                 <th>Date</th>
                                 <th>Payment Status</th>
                                 <th>Rate</th>
-                                <td>
-                                    @if ($transaction->listing)
-                                        <a
-                                            href="{{ route('listings.show', $transaction->listing->id) }}">{{ $transaction->listing->title }}</a>
-                                    @else
-                                        -
-                                    @endif
-                                </td>
-                                <td>{{ $transaction->buyer ? $transaction->buyer->first_name . ' ' . $transaction->buyer->last_name : '-' }}
-                                </td>
-                                <td>{{ number_format($transaction->amount, 2) }} PLN</td>
-                                <td>{{ $transaction->transaction_date ? \Carbon\Carbon::parse($transaction->transaction_date)->format('d.m.Y H:i') : '-' }}
-                                </td>
-                                <td>{{ ucfirst($transaction->payment_status) }}</td>
-                                <td>
-                                    @if (in_array($transaction->payment_status, ['confirmed', 'canceled']))
-                                        @php
-                                            $alreadyRated = \App\Models\UserRating::where(
-                                                'transaction_id',
-                                                $transaction->id,
-                                            )
-                                                ->where('rated_by_user_id', auth()->id())
-                                                ->exists();
-                                        @endphp
-                                        @if ($alreadyRated)
-                                            <span title="Ocena już wystawiona"
-                                                style="color: #aaa; font-size: 1.3em;">&#9733;</span>
-                                        @else
-                                            <a href="{{ route('userRatings.create', ['transaction_id' => $transaction->id]) }}"
-                                                title="Wystaw ocenę" style="color: #f5b301; font-size: 1.3em;">
-                                                &#9733;
-                                            </a>
-                                        @endif
-                                    @endif
-                                </td>
                             </tr>
                         </thead>
                         <tbody>

@@ -60,6 +60,11 @@ class ListingController extends Controller
 
             $listing = \App\Models\Listing::create($validated);
 
+            // Losowanie czasu promocji 1-48h
+            $promotionHours = rand(1, 48);
+            $listing->promotion_expires_at = now()->addHours($promotionHours);
+            $listing->save();
+
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $image) {
                     $path = $image->store('listings/' . $listing->id, 'public');

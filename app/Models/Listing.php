@@ -13,11 +13,16 @@ class Listing extends Model
         'description',
         'price',
         'status',
+        'promotion_expires_at'
         'visits'
     ];
 
     protected $attributes = [
         'status' => 'active'
+    ];
+
+    protected $casts = [
+        'promotion_expires_at' => 'datetime',
     ];
 
     const STATUS_ACTIVE = 'active';

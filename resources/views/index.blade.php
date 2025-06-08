@@ -33,8 +33,12 @@
                             </select>
                         </div>
                         <div class="filter-group">
-                            <label class="filter-label">Location</label>
-                            <input type="text" name="location" class="filter-input" placeholder="Enter location" value="{{ request('location') }}">
+                            <label class="filter-label">Date Range</label>
+                            <div class="date-range-container">
+                                <input type="date" name="date_from" class="date-range-input" placeholder="From" value="{{ request('date_from') }}">
+                                <span class="date-range-separator">to</span>
+                                <input type="date" name="date_to" class="date-range-input" placeholder="To" value="{{ request('date_to') }}">
+                            </div>
                         </div>
                         <div class="filter-group">
                             <label class="filter-label">Price Range</label>

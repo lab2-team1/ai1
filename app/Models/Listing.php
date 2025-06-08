@@ -11,6 +11,7 @@ class Listing extends Model
         'category_id',
         'title',
         'description',
+        'location',
         'price',
         'status',
         'promotion_expires_at',

@@ -14,6 +14,7 @@ class Listing extends Model
         'price',
         'status',
         'promotion_expires_at'
+        'visits'
     ];
 
     protected $attributes = [
@@ -147,6 +148,11 @@ class Listing extends Model
         if ($this->status === self::STATUS_EXPIRED) {
             $this->update(['status' => self::STATUS_ACTIVE]);
         }
+    }
+
+    public function incrementVisits()
+    {
+        $this->increment('visits');
     }
 
     protected static function boot()

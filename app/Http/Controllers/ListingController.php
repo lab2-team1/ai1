@@ -113,6 +113,7 @@ class ListingController extends Controller
     public function show(string $id)
     {
         $listing = Listing::with(['user', 'category'])->findOrFail($id);
+        $listing->incrementVisits();
         return view('listing', compact('listing'));
     }
 

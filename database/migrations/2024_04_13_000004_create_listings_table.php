@@ -16,6 +16,7 @@ return new class extends Migration
             $table->text('description');
             $table->decimal('price', 10, 2);
             $table->string('status', 20)->default('active');
+            $table->unsignedInteger('visits')->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')
@@ -34,4 +35,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('listings');
     }
-}; 
+};

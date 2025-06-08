@@ -12,7 +12,8 @@
                 <div class="search-container">
                     <form action="{{ route('search') }}" method="GET" class="search-form">
                         <div class="search-input-group">
-                            <input type="text" name="query" class="search-input" placeholder="Search for anything..." value="{{ request('query') }}">
+                            <input type="text" name="query" class="search-input" placeholder="Search for anything..." value="{{ request('query') }}" id="search-input">
+                            <div id="search-suggestions" class="search-suggestions"></div>
                             <button type="submit" class="search-button">Search</button>
                         </div>
                     </form>
@@ -93,6 +94,7 @@
                                     <div class="listing-footer">
                                         <span class="listing-price">{{ number_format($listing->price, 2) }} zł</span>
                                         <span class="listing-date" datetime="{{ $listing->created_at->toIso8601String() }}">{{ $listing->created_at->diffForHumans() }}</span>
+                                        <span class="listing-visits"><i class="fas fa-eye"></i> {{ $listing->visits }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -107,5 +109,6 @@
 
         <!-- footer -->
         @include('shared.footer')
+        <script src="{{ asset('js/search.js') }}"></script>
     </body>
 </html>

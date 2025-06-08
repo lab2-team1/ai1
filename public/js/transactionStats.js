@@ -1,19 +1,9 @@
 // Kod odpowiedzialny za wykresy transakcji
 // Wymaga Chart.js (np. przez CDN w widoku lub import w bundlerze)
 
-// Tab switching logic for transactions dashboard
-function showTab(tabId) {
-    document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.getElementById(tabId).style.display = 'block';
-    document.querySelector('.tab-btn[onclick="showTab(\'' + tabId + '\')"]').classList.add('active');
-}
-
 // Chart rendering logic
 // Pobierz dane z atrybutów data- na elemencie #transactions-data
 document.addEventListener('DOMContentLoaded', function() {
-    // Tab switching is handled by showTab (function is global)
-    // Chart rendering below:
     const dataElem = document.getElementById('transactions-data');
     if (!dataElem) return;
     const monthlyLabels = JSON.parse(dataElem.dataset.labels || '[]');

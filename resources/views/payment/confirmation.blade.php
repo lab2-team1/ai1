@@ -11,8 +11,10 @@
                         <p class="listing-description">You have successfully purchased: <strong>{{ $transaction->listing->title }}</strong></p>
                         <p class="listing-description">Amount paid: <strong>{{ number_format($transaction->amount, 2) }} PLN</strong></p>
                         <p class="listing-description">Selected payment method: <strong>{{ ucfirst(str_replace('_', ' ', $transaction->payment_method)) }}</strong></p>
+                        <div class="button-container">
+                            <a href="/" class="btn-primary btn-homepage">Go to homepage</a>
+                        </div>
                     </div>
-                    <a href="/" class="btn-primary" style="margin-top: 20px; display: inline-block;">Go to homepage</a>
                 </div>
             </div>
         </main>

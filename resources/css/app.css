@@ -1001,20 +1001,16 @@ a.btn-primary{
 
 /* Listing Details Styles */
 .listing-details {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 .detail-group {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e3e3e0;
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .detail-group h2 {
@@ -1555,4 +1551,20 @@ code {
     margin-bottom: 0.7em;
     margin-right: 0.5em;
     box-shadow: 0 2px 6px rgba(255,215,0,0.15);
+}
+
+/* Payment confirmation button styles */
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.btn-homepage {
+    display: inline-block;
+    width: auto;
+    text-align: center;
+    padding: 8px 20px;
+    height: 36px;
+    line-height: 20px;
 }

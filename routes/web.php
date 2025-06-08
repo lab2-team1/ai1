@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/user/transactions', [UserController::class, 'transactions'])->name('user.transactions');
 
+    Route::get('/user/transaction-stats', [UserController::class, 'transactionStats'])->name('user.transactionStats');
 
     Route::put('/user/update', [UserController::class, 'update'])->name('user.update');
 

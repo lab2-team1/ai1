@@ -12,7 +12,8 @@
                 <div class="search-container">
                     <form action="{{ route('search') }}" method="GET" class="search-form">
                         <div class="search-input-group">
-                            <input type="text" name="query" class="search-input" placeholder="Search for anything..." value="{{ request('query') }}">
+                            <input type="text" name="query" class="search-input" placeholder="Search for anything..." value="{{ request('query') }}" id="search-input">
+                            <div id="search-suggestions" class="search-suggestions"></div>
                             <button type="submit" class="search-button">Search</button>
                         </div>
                     </form>
@@ -65,11 +66,23 @@
                 </div>
 
                 <section class="latest-listings">
-                    <h2>Najnowsze ogłoszenia</h2>
+                    <h2>Newest listings</h2>
                     <div class="listings-grid">
                         @foreach($listings as $listing)
                             <div class="listing-card">
-                                <div class="listing-image"></div>
+                                <div class="listing-image">
+                                    @if($listing->images->isNotEmpty())
+                                        <div class="image-slideshow" data-listing-id="{{ $listing->id }}">
+                                            @foreach($listing->images->sortBy('order') as $image)
+                                                <div class="slide {{ $loop->first ? 'active' : '' }}">
+                                                    <img src="{{ asset('storage/' . $image->image_url) }}" alt="{{ $listing->title }}" class="listing-img" loading="lazy">
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        <div class="no-image">No Image Available</div>
+                                    @endif
+                                </div>
                                 <div class="listing-content">
                                     <h3 class="listing-title">{{ $listing->title }}</h3>
                                     <p class="listing-description">{{ Str::limit($listing->description, 100) }}</p>
@@ -78,6 +91,7 @@
                                     <div class="listing-footer">
                                         <span class="listing-price">{{ number_format($listing->price, 2) }} zł</span>
                                         <span class="listing-date" datetime="{{ $listing->created_at->toIso8601String() }}">{{ $listing->created_at->diffForHumans() }}</span>
+                                        <span class="listing-visits"><i class="fas fa-eye"></i> {{ $listing->visits }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -92,5 +106,6 @@
 
         <!-- footer -->
         @include('shared.footer')
+        <script src="{{ asset('js/search.js') }}"></script>
     </body>
 </html>

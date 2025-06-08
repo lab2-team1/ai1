@@ -12,7 +12,8 @@ class Listing extends Model
         'title',
         'description',
         'price',
-        'status'
+        'status',
+        'visits'
     ];
 
     protected $attributes = [
@@ -37,6 +38,28 @@ class Listing extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ListingImage::class);
+    }
+
+    public function primaryImage()
+    {
+        return $this->hasOne(ListingImage::class)->where('is_primary', true);
+    }
+
+    public function getPrimaryImageUrlAttribute()
+    {
+        $primaryImage = $this->primaryImage;
+        if ($primaryImage) {
+            return asset('storage/' . $primaryImage->image_url);
+        }
+
+        // Fallback to first image if no primary image is set
+        $firstImage = $this->images()->orderBy('order')->first();
+        return $firstImage ? asset('storage/' . $firstImage->image_url) : null;
     }
 
     public function transactions()
@@ -122,4 +145,22 @@ class Listing extends Model
         }
     }
 
+    public function incrementVisits()
+    {
+        $this->increment('visits');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($listing) {
+            foreach ($listing->images as $image) {
+                if (file_exists(public_path('storage/' . $image->image_url))) {
+                    unlink(public_path('storage/' . $image->image_url));
+                }
+                $image->delete();
+            }
+        });
+    }
 }

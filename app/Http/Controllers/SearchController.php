@@ -78,4 +78,20 @@ class SearchController extends Controller
             'categories' => $categories
         ]);
     }
+
+    public function suggestions(Request $request)
+    {
+        $query = $request->get('query');
+        if (empty($query)) {
+            return response()->json([]);
+        }
+        $suggestions = Listing::whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($query) . '%'])
+            ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($query) . '%'])
+            ->select('title')
+            ->distinct()
+            ->limit(5)
+            ->get()
+            ->pluck('title');
+        return response()->json($suggestions);
+    }
 }

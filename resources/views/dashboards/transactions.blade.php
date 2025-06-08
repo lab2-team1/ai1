@@ -15,11 +15,6 @@
                 <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
 
-            <div class="tabs" style="margin-bottom: 2rem;">
-                <button class="tab-btn active" onclick="showTab('transactionsTab')">Transakcje</button>
-                <button class="tab-btn" onclick="showTab('statsTab')">Statystyki</button>
-            </div>
-
             <div id="transactionsTab" class="tab-content" style="display: block;">
                 <h1>Transaction History</h1>
                 <h2>Bought</h2>

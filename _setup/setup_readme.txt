@@ -1,6 +1,6 @@
 Kroki potrzebne do postawienia aplikacji:
 
-1. Przeczytaj AI1 Instalacja potrzebnych komponentów.pdf autorstwa mgr inż. Jaromira Sarzyńskiego
+1. Przeczytaj AI1 Instalacja potrzebnych komponentów.pdf 
 i wykonaj wszystkie polecenia (włącznie z instalacją rozszerzeń)
 2. Wejdź na https://www.enterprisedb.com/downloads/postgres-postgresql-downloads i pobierz 
 najnowszą wersję na Windowsa. Zainstaluj z domyślnymi ustawieniami, jako hasło podaj 123
